@@ -14,18 +14,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name="categories", schema = "rrhh")
-public class Abogado {
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer idAbogado;
+    private Integer idCliente;
     @Column(nullable = false, length = 70)//name="nombre")
-    private String telefono;
+    private String name;
+
 
     @Column(nullable = true, length = 200)
-    private String DNI;
+    private String description;
 
-    @Column(nullable = true)
-    private boolean estado;
+    @Column(nullable = false)
+    private boolean status;
+
 }
