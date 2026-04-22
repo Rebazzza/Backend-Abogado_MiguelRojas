@@ -36,5 +36,5 @@ public class Especialista {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_USUARIO"))
-    private Usuario usuario
+    private Usuario usuario;
 }
