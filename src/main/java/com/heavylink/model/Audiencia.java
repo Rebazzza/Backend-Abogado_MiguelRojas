@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,7 +35,7 @@ public class Audiencia {
     @Column(nullable = false, length = 200)
     private String Direccion;
 
-    @Column(nullable = false)
+    @ManyToOne
     private Abogado Abogado;
 
     @Column(nullable = true)
