@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Casos {
+public class Caso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -21,7 +21,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Entity
 
-public class Areas_Derecho {
+public class Area_Derecho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
