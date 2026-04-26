@@ -10,11 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -27,10 +23,10 @@ public class Area_Derecho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer Codigo_Area;
-
     @Column(nullable = false, length = 100)
     private String Nombre;
-
     @Column(nullable = false, length = 200)
     private String Descripcion;
+    @Column(nullable = false)
+    private boolean estado;
 }

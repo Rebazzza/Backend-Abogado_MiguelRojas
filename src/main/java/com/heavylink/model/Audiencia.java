@@ -11,10 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -28,16 +25,13 @@ public class Audiencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer idAudiencia;
-
     @Column(nullable = false)
     private LocalDate Fecha;
-
     @Column(nullable = false, length = 200)
     private String Direccion;
-
     @ManyToOne
     private Abogado Abogado;
-
     @Column(nullable = true)
     private LocalTime Hora;
+    
 }

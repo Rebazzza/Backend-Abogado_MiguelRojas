@@ -20,12 +20,18 @@ public class Abogado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer idAbogado;
-    @Column(nullable = false, length = 70)//name="nombre")
+    @Column(nullable = false, length = 150)//name="nombre")
+    private String nombre;
+    @Column(nullable = false, length = 150)//name="nombre")
+    private String apellido;
+    @Column(nullable = false, length = 50)//name="nombre")
     private String telefono;
-
-    @Column(nullable = true, length = 200)
+    @Column(nullable = true, length = 20)
     private String DNI;
-
+    @Column(nullable = true, length = 100)
+    private String correo;
+    @Column(nullable = true, length = 50)
+    private String especialidad;
     @Column(nullable = true)
     private boolean estado;
 }

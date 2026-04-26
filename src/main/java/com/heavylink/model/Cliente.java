@@ -18,15 +18,24 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    
     private Integer idCliente;
     @Column(nullable = false, length = 70)//name="nombre")
-    private String name;
-
-
+    private String nombre;
     @Column(nullable = true, length = 200)
-    private String description;
-
+    private String descripcion;
+    @Column(nullable = false, length = 15)
+    private String DNI;
+    @Column(nullable = true, length = 15)
+    private String RUC;
+    @Column(nullable = true, length = 15)
+    private String telefono;
+    @Column(nullable = true, length = 15)
+    private String dirección;
+    @Column(nullable = true, length = 15)
+    private String correo;
     @Column(nullable = false)
-    private boolean status;
+    private boolean estado;
+    
 
 }
