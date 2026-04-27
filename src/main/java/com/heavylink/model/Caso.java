@@ -39,11 +39,11 @@ public class Caso {
    
     
     @ManyToOne
-    @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_ABOGADO"))
+    @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_Abogado"))
     private Abogado abogado;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_USUARIO"))
-    private Usuario usuario;
+    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_Cliente"))
+    private Usuario cliente;
 
 }

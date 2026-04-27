@@ -36,6 +36,9 @@ public class Cliente {
     private String correo;
     @Column(nullable = false)
     private boolean estado;
+    @Column(nullable = false)
+    private boolean TipoCliente;
+    
     
 
 }

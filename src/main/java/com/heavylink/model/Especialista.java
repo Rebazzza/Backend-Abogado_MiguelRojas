@@ -42,11 +42,5 @@ public class Especialista {
     @Column(nullable = false,length = 20)
     private String correo;
     
-    @ManyToOne
-    @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_ABOGADO"))
-    private Abogado abogado;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_USUARIO"))
-    private Usuario usuario;
+    	
 }

@@ -1,13 +1,9 @@
 package com.heavylink.model;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,7 +26,10 @@ public class Servicio_Legal {
 
     @Column(nullable = false, length = 30)
     private String estado;
+    @Column(nullable = true)
+    private Float costoBase;
     
+    	
 
     
 }

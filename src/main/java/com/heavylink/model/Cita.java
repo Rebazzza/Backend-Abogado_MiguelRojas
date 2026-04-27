@@ -26,12 +26,6 @@ public class Cita {
     @EqualsAndHashCode.Include
     private Integer idCita;
 
-    @Column(nullable = false, length = 100)
-    private String nombreCliente;
-
-    @Column(nullable = false, length = 100)
-    private String abogadoAsignado;
-
     @Column(nullable = false, length = 150)
     private String asuntoLegal; // Ej: "Consulta de divorcio", "Revisión de contrato", etc.
 
@@ -39,13 +33,13 @@ public class Cita {
     private String detallesAdicionales; // Opcional: para que el asistente o cliente deje notas
 
     @Column(nullable = false)
-    private LocalDateTime fechaHora; // Indispensable para saber cuándo es la cita
+    private LocalDateTime fechaHora; 
 
     @Column(nullable = false)
     private boolean activa; // true = Pendiente/Confirmada, false = Cancelada o Finalizada
     @ManyToOne
-    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_Cliente"))
-    private Usuario cliente;
+    @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_CITA_Cliente"))
+    private Cliente cliente;
 
    
     

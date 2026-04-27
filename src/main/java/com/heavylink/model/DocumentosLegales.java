@@ -1,5 +1,9 @@
 package com.heavylink.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -13,30 +17,26 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 
-public class Expediente {
+public class DocumentosLegales {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer idExPediente;
+    private Integer idDocumento;
 	@Column(nullable = false, length = 70)//name="nombre")
-    private String titulo;
-	@Column(nullable = false, length = 70)
-    private String tipoExpediente;
-    @Column(nullable = true, length = 200)
-    private String resumenExpediente;
-    @Column(nullable = true)
-    private boolean estadoExpediente;
-    @Column(nullable = true)
-    private boolean fechaInicio;
-    @Column(nullable = true)
-    private boolean fechaCierre;
-    @ManyToOne
-    @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_Expediente_Caso"))
-    private Caso caso;
+    private String nombreArchivo;
+	@Column(nullable = false, length = 70)//name="nombre")
+    private String ruta;
+	@Column(nullable = false)
+    private LocalDateTime fechaCreacion;
+	@ManyToOne
+	@JoinColumn(name = "id_Expediente", nullable = false, foreignKey = @ForeignKey(name = "FK_Expediente"))
+    private Expediente Expediente;
+	
+	
+	
 }
