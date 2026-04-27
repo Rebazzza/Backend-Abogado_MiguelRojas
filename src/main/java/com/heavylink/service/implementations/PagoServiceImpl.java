@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.IPago;
+import com.heavylink.repository.IPago;
 import com.heavylink.model.Pago;
 import com.heavylink.service.IPagoService;
 

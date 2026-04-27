@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.IExpediente;
+import com.heavylink.repository.IExpediente;
 import com.heavylink.model.Expediente;
 import com.heavylink.service.IExpedienteService;
 

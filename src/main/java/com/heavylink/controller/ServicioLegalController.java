@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heavylink.model.Servicio_Legal;
-import com.heavylink.service.IServicios_LegalesService;
+import com.heavylink.model.ServicioLegal;
+import com.heavylink.service.IServiciosLegalesService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,25 +21,25 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/servicios-legales")
 public class ServicioLegalController {
 
-    private final IServicios_LegalesService service;
+    private final IServiciosLegalesService service;
 
     @GetMapping
-    public List<Servicio_Legal> findAll() throws Exception {
+    public List<ServicioLegal> findAll() throws Exception {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Servicio_Legal findById(@PathVariable("id") Integer id) throws Exception {
+    public ServicioLegal findById(@PathVariable("id") Integer id) throws Exception {
         return service.findById(id);
     }
 
     @PostMapping
-    public Servicio_Legal save(@RequestBody Servicio_Legal servicioLegal) throws Exception {
+    public ServicioLegal save(@RequestBody ServicioLegal servicioLegal) throws Exception {
         return service.save(servicioLegal);
     }
 
     @PutMapping("/{id}")
-    public Servicio_Legal update(@PathVariable("id") Integer id, @RequestBody Servicio_Legal servicioLegal) throws Exception {
+    public ServicioLegal update(@PathVariable("id") Integer id, @RequestBody ServicioLegal servicioLegal) throws Exception {
         return service.update(servicioLegal, id);
     }
 

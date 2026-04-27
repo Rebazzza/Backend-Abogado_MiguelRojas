@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.IAbogadoArea;
+import com.heavylink.repository.IAbogadoArea;
 import com.heavylink.model.AbogadoArea;
 import com.heavylink.service.IAbogadoAreaService;
 

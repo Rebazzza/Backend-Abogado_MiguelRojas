@@ -30,7 +30,7 @@ public class Abogado {
     @Column(nullable = false, length = 50)//name="nombre")
     private String telefono;
     @Column(nullable = true, length = 20)
-    private String DNI;
+    private String dni;
     @Column(nullable = true, length = 100)
     private String correo;
     @Column(nullable = true, length = 50)

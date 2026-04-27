@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.ICasos;
+import com.heavylink.repository.ICasos;
 import com.heavylink.model.Caso;
 import com.heavylink.service.ICasosService;
 

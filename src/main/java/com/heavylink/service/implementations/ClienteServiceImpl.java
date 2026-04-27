@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.ICliente;
+import com.heavylink.repository.ICliente;
 import com.heavylink.model.Cliente;
 import com.heavylink.service.IClienteService;
 

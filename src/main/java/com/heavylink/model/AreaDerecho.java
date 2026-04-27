@@ -17,16 +17,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 
-public class Area_Derecho {
+public class AreaDerecho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private Integer Codigo_Area;
+    @Column(name="Codigo_Area")
+    private Integer codigoArea;
     @Column(nullable = false, length = 100)
-    private String Nombre;
+    private String nombre;
     @Column(nullable = false, length = 200)
-    private String Descripcion;
+    private String descripcion;
     @Column(nullable = false)
     private boolean estado;
 }

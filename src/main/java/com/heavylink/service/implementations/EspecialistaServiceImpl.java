@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.IEspecialista;
+import com.heavylink.repository.IEspecialista;
 import com.heavylink.model.Especialista;
 import com.heavylink.service.IEspecialistaService;
 

@@ -29,20 +29,20 @@ public class Audiencia {
     @EqualsAndHashCode.Include
     private Integer idAudiencia;
     @Column(nullable = false)
-    private LocalDate Fecha;
+    private LocalDate fecha;
     @Column(nullable = false, length = 100)
-    private String Direccion;
+    private String direccion;
     @ManyToOne
     @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_Audiencia_Abogado"))
     private Abogado abogado;
     @Column(nullable = true)
     private LocalDateTime Hora;
     @Column(nullable = true, length = 200)
-    private String TipoAudiencia;
+    private String tipoAudiencia;
     @Column(nullable = true, length = 200)
-    private String Lugar_Link;
+    private String lugarLink;
     @ManyToOne
     @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_AUDIENCIA_CASO"))
     private Caso caso;
-    
+
 }

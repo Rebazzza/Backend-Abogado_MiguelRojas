@@ -29,5 +29,5 @@ public class AbogadoArea {
     private Abogado abogado;
 	@ManyToOne
     @JoinColumn(name = "id_area", nullable = false, foreignKey = @ForeignKey(name = "FK_ABOGADO_AREA_AREA"))
-    private Area_Derecho area;
+    private AreaDerecho area;
 }

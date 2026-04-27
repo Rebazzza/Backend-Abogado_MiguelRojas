@@ -13,6 +13,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Data
 @NoArgsConstructor
@@ -32,10 +35,15 @@ public class Expediente {
     private String resumenExpediente;
     @Column(nullable = true)
     private boolean estadoExpediente;
+
     @Column(nullable = true)
     private String fechaInicio;
+
     @Column(nullable = true)
+    //private LocalDate fechaCierre;
+    //private LocalDateTime fechaCierre
     private String fechaCierre;
+
     @OneToOne
     @JoinColumn(name = "id_caso", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_Expediente_Caso"))
     private Caso caso;
