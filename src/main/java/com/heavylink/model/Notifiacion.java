@@ -33,7 +33,7 @@ public class Notifiacion {
 	@Column(nullable = true)
     private LocalDateTime fecha;
 	@ManyToOne
-	@JoinColumn(name = "id_Abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_Abogado"))
-    private Abogado Abogado;
+	@JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_Notificacion_Usuario"))
+    private Usuario usuario;
 	
 }

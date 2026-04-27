@@ -41,6 +41,10 @@ public class Cita {
     @JoinColumn(name = "id_cliente", nullable = false, foreignKey = @ForeignKey(name = "FK_CITA_Cliente"))
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_CITA_Abogado"))
+    private Abogado abogado;
+
    
     
 }

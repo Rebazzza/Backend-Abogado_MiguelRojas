@@ -34,8 +34,8 @@ public class DocumentosLegales {
 	@Column(nullable = false)
     private LocalDateTime fechaCreacion;
 	@ManyToOne
-	@JoinColumn(name = "id_Expediente", nullable = false, foreignKey = @ForeignKey(name = "FK_Expediente"))
-    private Expediente Expediente;
+	@JoinColumn(name = "id_expediente", nullable = false, foreignKey = @ForeignKey(name = "FK_DOCUMENTO_EXPEDIENTE"))
+    private Expediente expediente;
 	
 	
 	

@@ -2,9 +2,12 @@ package com.heavylink.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -34,4 +37,8 @@ public class Abogado {
     private String especialidad;
     @Column(nullable = true)
     private boolean estado;
+
+    @OneToOne
+    @JoinColumn(name = "id_usuario", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_ABOGADO_USUARIO"))
+    private Usuario usuario;
 }

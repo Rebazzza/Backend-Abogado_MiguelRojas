@@ -33,7 +33,8 @@ public class Audiencia {
     @Column(nullable = false, length = 100)
     private String Direccion;
     @ManyToOne
-    private Abogado Abogado;
+    @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_Audiencia_Abogado"))
+    private Abogado abogado;
     @Column(nullable = true)
     private LocalDateTime Hora;
     @Column(nullable = true, length = 200)
@@ -41,7 +42,7 @@ public class Audiencia {
     @Column(nullable = true, length = 200)
     private String Lugar_Link;
     @ManyToOne
-    @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_Caso"))
+    @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_AUDIENCIA_CASO"))
     private Caso caso;
     
 }

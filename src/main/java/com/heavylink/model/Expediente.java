@@ -7,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,10 +33,10 @@ public class Expediente {
     @Column(nullable = true)
     private boolean estadoExpediente;
     @Column(nullable = true)
-    private boolean fechaInicio;
+    private String fechaInicio;
     @Column(nullable = true)
-    private boolean fechaCierre;
-    @ManyToOne
-    @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_Expediente_Caso"))
+    private String fechaCierre;
+    @OneToOne
+    @JoinColumn(name = "id_caso", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_Expediente_Caso"))
     private Caso caso;
 }
