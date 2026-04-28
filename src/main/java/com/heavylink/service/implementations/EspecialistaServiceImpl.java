@@ -2,7 +2,6 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IEspecialista;
@@ -15,32 +14,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class EspecialistaServiceImpl implements IEspecialistaService {
 
-    private final IEspecialista repository;
+    private final IEspecialista repo;
 
     @Override
     public Especialista save(Especialista especialista) throws Exception {
-        return repository.save(especialista);
+        return repo.save(especialista);
     }
 
     @Override
     public Especialista update(Especialista especialista, Integer id) throws Exception {
-        Especialista actual = findById(id);
-        BeanUtils.copyProperties(especialista, actual, "idEspecialista");
-        return repository.save(actual);
+        especialista.setIdEspecialista(id);
+        return repo.save(especialista);
     }
 
     @Override
     public List<Especialista> findAll() throws Exception {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public Especialista findById(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Especialista no encontrado con id: " + id));
+        return repo.findById(id).orElse(new Especialista());
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        repository.delete(findById(id));
+        repo.deleteById(id);
     }
 }

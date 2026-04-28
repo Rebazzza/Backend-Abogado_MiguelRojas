@@ -32,10 +32,9 @@ public class Caso {
     private String descripcion;
 
     @Column(nullable = false, length = 30)
-    private String estado; 
+    private boolean estado; 
 
-    @Column(nullable = false)
-    private boolean status; 
+   
    
     
     @ManyToOne

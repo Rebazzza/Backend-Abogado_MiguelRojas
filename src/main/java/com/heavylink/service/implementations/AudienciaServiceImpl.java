@@ -2,7 +2,6 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAudiencia;
@@ -15,32 +14,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AudienciaServiceImpl implements IAudienciaService {
 
-    private final IAudiencia repository;
+    private final IAudiencia repo;
 
     @Override
     public Audiencia save(Audiencia audiencia) throws Exception {
-        return repository.save(audiencia);
+        return repo.save(audiencia);
     }
 
     @Override
     public Audiencia update(Audiencia audiencia, Integer id) throws Exception {
-        Audiencia actual = findById(id);
-        BeanUtils.copyProperties(audiencia, actual, "idAudiencia");
-        return repository.save(actual);
+        audiencia.setIdAudiencia(id);
+        return repo.save(audiencia);
     }
 
     @Override
     public List<Audiencia> findAll() throws Exception {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public Audiencia findById(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Audiencia no encontrada con id: " + id));
+        return repo.findById(id).orElse(new Audiencia());
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        repository.delete(findById(id));
+        repo.deleteById(id);
     }
 }

@@ -2,7 +2,6 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IExpediente;
@@ -15,32 +14,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ExpedienteServiceImpl implements IExpedienteService {
 
-    private final IExpediente repository;
+    private final IExpediente repo;
 
     @Override
     public Expediente save(Expediente expediente) throws Exception {
-        return repository.save(expediente);
+        return repo.save(expediente);
     }
 
     @Override
     public Expediente update(Expediente expediente, Integer id) throws Exception {
-        Expediente actual = findById(id);
-        BeanUtils.copyProperties(expediente, actual, "idExPediente");
-        return repository.save(actual);
+        expediente.setIdExPediente(id);
+        return repo.save(expediente);
     }
 
     @Override
     public List<Expediente> findAll() throws Exception {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public Expediente findById(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Expediente no encontrado con id: " + id));
+        return repo.findById(id).orElse(new Expediente());
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        repository.delete(findById(id));
+        repo.deleteById(id);
     }
 }

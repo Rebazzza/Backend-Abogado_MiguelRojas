@@ -2,7 +2,6 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAbogadoArea;
@@ -15,32 +14,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AbogadoAreaServiceImpl implements IAbogadoAreaService {
 
-    private final IAbogadoArea repository;
+    private final IAbogadoArea repo;
 
     @Override
     public AbogadoArea save(AbogadoArea abogadoArea) throws Exception {
-        return repository.save(abogadoArea);
+        return repo.save(abogadoArea);
     }
 
     @Override
     public AbogadoArea update(AbogadoArea abogadoArea, Integer id) throws Exception {
-        AbogadoArea actual = findById(id);
-        BeanUtils.copyProperties(abogadoArea, actual, "idAbogadoArea");
-        return repository.save(actual);
+        abogadoArea.setIdAbogadoArea(id);
+        return repo.save(abogadoArea);
     }
 
     @Override
     public List<AbogadoArea> findAll() throws Exception {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public AbogadoArea findById(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Relacion abogado-area no encontrada con id: " + id));
+        return repo.findById(id).orElse(new AbogadoArea());
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        repository.delete(findById(id));
+        repo.deleteById(id);
     }
 }

@@ -2,7 +2,6 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IDocumentosLegales;
@@ -15,32 +14,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DocumentosLegalesServiceImpl implements IDocumentosLegalesService {
 
-    private final IDocumentosLegales repository;
+    private final IDocumentosLegales repo;
 
     @Override
     public DocumentosLegales save(DocumentosLegales documentos) throws Exception {
-        return repository.save(documentos);
+        return repo.save(documentos);
     }
 
     @Override
     public DocumentosLegales update(DocumentosLegales documentos, Integer id) throws Exception {
-        DocumentosLegales actual = findById(id);
-        BeanUtils.copyProperties(documentos, actual, "idDocumento");
-        return repository.save(actual);
+        documentos.setIdDocumento(id);
+        return repo.save(documentos);
     }
 
     @Override
     public List<DocumentosLegales> findAll() throws Exception {
-        return repository.findAll();
+        return repo.findAll();
     }
 
     @Override
     public DocumentosLegales findById(Integer id) throws Exception {
-        return repository.findById(id).orElseThrow(() -> new Exception("Documento legal no encontrado con id: " + id));
+        return repo.findById(id).orElse(new DocumentosLegales());
     }
 
     @Override
     public void delete(Integer id) throws Exception {
-        repository.delete(findById(id));
+        repo.deleteById(id);
     }
 }
