@@ -44,5 +44,5 @@ public class Audiencia {
     @ManyToOne
     @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_AUDIENCIA_CASO"))
     private Caso caso;
-    
+
 }

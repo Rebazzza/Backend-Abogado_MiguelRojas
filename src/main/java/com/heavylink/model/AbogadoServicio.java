@@ -28,6 +28,6 @@ public class AbogadoServicio {
     private Abogado abogado;
 	@ManyToOne
     @JoinColumn(name = "id_servicio", nullable = false, foreignKey = @ForeignKey(name = "FK_ABOGADO_SERVICIO_SERVICIO"))
-    private Servicio_Legal servicio;
+    private ServicioLegal servicio;
 
 }

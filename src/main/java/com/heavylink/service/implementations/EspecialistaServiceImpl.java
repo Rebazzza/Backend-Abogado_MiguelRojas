@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.heavylink.Repository.IDocumentosLegales;
 import com.heavylink.Repository.IEspecialista;
+import com.heavylink.model.DocumentosLegales;
 import com.heavylink.model.Especialista;
 import com.heavylink.service.IEspecialistaService;
 
@@ -13,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class EspecialistaServiceImpl implements IEspecialistaService {
-
     private final IEspecialista repo;
 
     @Override
@@ -23,7 +24,7 @@ public class EspecialistaServiceImpl implements IEspecialistaService {
 
     @Override
     public Especialista update(Especialista especialista, Integer id) throws Exception {
-        especialista.setIdEspecialista(id);
+    	especialista.setIdEspecialista(id);
         return repo.save(especialista);
     }
 

@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 
-public class Notifiacion {
+public class Notificacion {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -35,5 +35,5 @@ public class Notifiacion {
 	@ManyToOne
 	@JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_Notificacion_Usuario"))
     private Usuario usuario;
-	
+
 }

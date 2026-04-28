@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heavylink.model.Notifiacion;
+import com.heavylink.model.Notificacion;
 import com.heavylink.service.INotificacionService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,22 +24,22 @@ public class NotificacionController {
     private final INotificacionService service;
 
     @GetMapping
-    public List<Notifiacion> findAll() throws Exception {
+    public List<Notificacion> findAll() throws Exception {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Notifiacion findById(@PathVariable("id") Integer id) throws Exception {
+    public Notificacion findById(@PathVariable("id") Integer id) throws Exception {
         return service.findById(id);
     }
 
     @PostMapping
-    public Notifiacion save(@RequestBody Notifiacion notifiacion) throws Exception {
+    public Notificacion save(@RequestBody Notificacion notifiacion) throws Exception {
         return service.save(notifiacion);
     }
 
     @PutMapping("/{id}")
-    public Notifiacion update(@PathVariable("id") Integer id, @RequestBody Notifiacion notifiacion) throws Exception {
+    public Notificacion update(@PathVariable("id") Integer id, @RequestBody Notificacion notifiacion) throws Exception {
         return service.update(notifiacion, id);
     }
 

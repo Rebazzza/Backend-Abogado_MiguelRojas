@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Servicio_Legal {
+public class ServicioLegal {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
@@ -28,8 +28,4 @@ public class Servicio_Legal {
     private String estado;
     @Column(nullable = true)
     private Float costoBase;
-    
-    	
-
-    
 }

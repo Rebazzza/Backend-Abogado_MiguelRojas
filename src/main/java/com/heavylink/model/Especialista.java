@@ -29,18 +29,18 @@ public class Especialista {
     private String descripcion;
 
     @Column(nullable = false, length = 30)
-    private String estado; 
+    private String estado;
 
     @Column(nullable = false)
-    private boolean Dni; 
+    private boolean dni;
     @Column(nullable = false)
-    private boolean disponibilidad; 
-    
+    private boolean disponibilidad;
+
     @Column(nullable = false,length = 20)
     private String telefono;
-    
+
     @Column(nullable = false,length = 20)
     private String correo;
-    
-    	
+
+
 }
