@@ -2,12 +2,10 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.model.Notificacion;
 import org.springframework.stereotype.Service;
 
-import com.heavylink.Repository.IEspecialista;
 import com.heavylink.Repository.INotificacion;
-import com.heavylink.model.Especialista;
-import com.heavylink.model.Notificacion;
 import com.heavylink.service.INotificacionService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,13 +18,13 @@ public class NotificacionServiceImpl implements INotificacionService {
     private final INotificacion repo;
 
     @Override
-    public Notificacion save(Notificacion  notificacion ) throws Exception {
+    public Notificacion save(Notificacion notificacion ) throws Exception {
         return repo.save(notificacion);
     }
 
     @Override
     public Notificacion update(Notificacion notificacion, Integer id) throws Exception {
-    	notificacion.setIdNotificacion(id);
+    	notifiacion.setIdNotificacion(id);
         return repo.save(notificacion);
     }
 

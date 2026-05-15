@@ -20,20 +20,20 @@ import lombok.NoArgsConstructor;
 @Entity
 
 public class Notificacion {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer idNotificacion;
-	@Column(nullable = false, length = 70)//name="nombre")
+    @Column(nullable = false, length = 70)//name="nombre")
     private String titulo;
-	@Column(nullable = false, length = 500)
+    @Column(nullable = false, length = 500)
     private String mensaje;
-	@Column(nullable = false)
+    @Column(nullable = false)
     private boolean leido;
-	@Column(nullable = true)
+    @Column(nullable = true)
     private LocalDateTime fecha;
-	@ManyToOne
-	@JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_Notificacion_Usuario"))
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false, foreignKey = @ForeignKey(name = "FK_Notificacion_Usuario"))
     private Usuario usuario;
 
 }

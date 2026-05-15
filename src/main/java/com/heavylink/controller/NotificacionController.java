@@ -2,6 +2,7 @@ package com.heavylink.controller;
 
 import java.util.List;
 
+import com.heavylink.model.Notificacion;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heavylink.model.Notificacion;
 import com.heavylink.service.INotificacionService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,13 +34,13 @@ public class NotificacionController {
     }
 
     @PostMapping
-    public Notificacion save(@RequestBody Notificacion notifiacion) throws Exception {
-        return service.save(notifiacion);
+    public Notificacion save(@RequestBody Notificacion notificacion) throws Exception {
+        return service.save(notificacion);
     }
 
     @PutMapping("/{id}")
-    public Notificacion update(@PathVariable("id") Integer id, @RequestBody Notificacion notifiacion) throws Exception {
-        return service.update(notifiacion, id);
+    public Notificacion update(@PathVariable("id") Integer id, @RequestBody Notificacion notificacion) throws Exception {
+        return service.update(notificacion, id);
     }
 
     @DeleteMapping("/{id}")

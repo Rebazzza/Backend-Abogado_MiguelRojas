@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IServicioLegal;
-import com.heavylink.Repository.INotificacion;
-import com.heavylink.model.Notificacion;
 import com.heavylink.model.ServicioLegal;
 import com.heavylink.service.IServiciosLegalesService;
 
