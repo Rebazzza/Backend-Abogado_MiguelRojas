@@ -24,7 +24,7 @@ public class NotificacionServiceImpl implements INotificacionService {
 
     @Override
     public Notificacion update(Notificacion notificacion, Integer id) throws Exception {
-    	notifiacion.setIdNotificacion(id);
+    	notificacion.setIdNotificacion(id);
         return repo.save(notificacion);
     }
 

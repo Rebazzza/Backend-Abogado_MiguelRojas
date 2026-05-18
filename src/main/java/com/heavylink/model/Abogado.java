@@ -23,11 +23,11 @@ public class Abogado {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer idAbogado;
-    @Column(nullable = false, length = 150)//name="nombre")
+    @Column(nullable = false, length = 150)
     private String nombre;
-    @Column(nullable = false, length = 150)//name="nombre")
+    @Column(nullable = false, length = 150)
     private String apellido;
-    @Column(nullable = false, length = 50)//name="nombre")
+    @Column(nullable = false, length = 50)
     private String telefono;
     @Column(nullable = true, length = 20)
     private String dni;
