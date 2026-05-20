@@ -38,7 +38,7 @@ public class Audiencia {
     @Column(nullable = true)
     private LocalDateTime hora;
     @Column(nullable = true, length = 200)
-    private String tipoAudiencia;
+    private String  tipoAudiencia;
     @Column(nullable = true, length = 200)
     private String lugarLink;
     @ManyToOne

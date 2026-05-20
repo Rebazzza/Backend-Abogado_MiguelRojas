@@ -1,0 +1,17 @@
+package com.heavylink.dto;
+
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AbogadoAreaDTO {
+    private Integer idAbogadoArea;
+    private String abogado;
+    private String area;
+
+}

@@ -1,50 +1,61 @@
 package com.heavylink.controller;
 
+import java.net.URI;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.heavylink.dto.AbogadoAreaDTO;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.AbogadoArea;
 import com.heavylink.service.IAbogadoAreaService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/abogado-areas")
+@CrossOrigin(origins = "*")
 public class AbogadoAreaController {
 
     private final IAbogadoAreaService service;
-
+    ModelMapper modelMapper = new ModelMapper();
     @GetMapping
-    public List<AbogadoArea> findAll() throws Exception {
-        return service.findAll();
-    }
+    public ResponseEntity<List<AbogadoAreaDTO>> findAll() throws Exception {
+        List<AbogadoAreaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AbogadoAreaDTO.class)).toList();
 
+        return ResponseEntity.ok(list);
+    }
     @GetMapping("/{id}")
-    public AbogadoArea findById(@PathVariable("id") Integer id) throws Exception {
-        return service.findById(id);
+    public ResponseEntity<AbogadoAreaDTO> findById(@PathVariable Integer id) throws Exception {
+        AbogadoArea obj = service.findById(id);
+
+        return ResponseEntity.ok(modelMapper.map(obj,AbogadoAreaDTO.class));
     }
 
     @PostMapping
-    public AbogadoArea save(@RequestBody AbogadoArea abogadoArea) throws Exception {
-        return service.save(abogadoArea);
+    public ResponseEntity<Void> save(@RequestBody AbogadoAreaDTO dto) throws Exception {
+        AbogadoArea obj = service.save(modelMapper.map(dto, AbogadoArea.class));
+
+        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
+        //localhost:9090/categories/4
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAbogadoArea()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public AbogadoArea update(@PathVariable("id") Integer id, @RequestBody AbogadoArea abogadoArea) throws Exception {
-        return service.update(abogadoArea, id);
+    public ResponseEntity<AbogadoAreaDTO> update(@PathVariable Integer id, @RequestBody AbogadoAreaDTO dto) throws Exception {
+        AbogadoArea obj = service.update(modelMapper.map(dto, AbogadoArea.class), id);
+        return ResponseEntity.ok(modelMapper.map(obj, AbogadoAreaDTO.class));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

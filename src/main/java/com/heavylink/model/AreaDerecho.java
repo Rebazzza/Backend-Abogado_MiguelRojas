@@ -22,8 +22,8 @@ public class AreaDerecho {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(name="Codigo_Area")
-    private Integer codigoArea;
+    @Column(name="idArea")
+    private Integer idArea;
     @Column(nullable = false, length = 100)
     private String nombre;
     @Column(nullable = false, length = 200)

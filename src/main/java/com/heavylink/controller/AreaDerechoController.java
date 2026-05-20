@@ -1,44 +1,66 @@
 package com.heavylink.controller;
 
+import java.awt.geom.Area;
+import java.net.URI;
 import java.util.List;
 
+
+import com.heavylink.dto.AreaDerechoDTO;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.AreaDerecho;
 import com.heavylink.service.IAreasDerechoService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/areas-derecho")
+@RequestMapping("/areas")
 @CrossOrigin(origins = "*")
 public class AreaDerechoController {
 
     private final IAreasDerechoService service;
 
+    ModelMapper modelMapper = new ModelMapper();
     @GetMapping
-    public List<AreaDerecho> findAll() throws Exception {
-        return service.findAll();
-    }
+    public ResponseEntity<List<AreaDerechoDTO>> findAll() throws Exception {
+        List<AreaDerechoDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AreaDerechoDTO.class)).toList();
 
+        return ResponseEntity.ok(list);
+    }
     @GetMapping("/{id}")
-    public AreaDerecho findById(@PathVariable("id") Integer id) throws Exception {
-        return service.findById(id);
+    public ResponseEntity<AreaDerechoDTO> findById(@PathVariable Integer id) throws Exception {
+        AreaDerecho obj = service.findById(id);
+
+        return ResponseEntity.ok(modelMapper.map(obj,AreaDerechoDTO.class));
     }
 
     @PostMapping
-    public AreaDerecho save(@RequestBody AreaDerecho areaDerecho) throws Exception {
-        return service.save(areaDerecho);
+    public ResponseEntity<Void> save(@RequestBody AreaDerechoDTO dto) throws Exception {
+        AreaDerecho obj = service.save(modelMapper.map(dto, AreaDerecho.class));
+
+        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
+        //localhost:9090/categories/4
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdArea()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public AreaDerecho update(@PathVariable("id") Integer id, @RequestBody AreaDerecho areaDerecho) throws Exception {
-        return service.update(areaDerecho, id);
+    public ResponseEntity<AreaDerechoDTO> update(@PathVariable Integer id, @RequestBody AreaDerechoDTO dto) throws Exception {
+        AreaDerecho obj = service.update(modelMapper.map(dto, AreaDerecho.class), id);
+        return ResponseEntity.ok(modelMapper.map(obj, AreaDerechoDTO.class));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
+
 }

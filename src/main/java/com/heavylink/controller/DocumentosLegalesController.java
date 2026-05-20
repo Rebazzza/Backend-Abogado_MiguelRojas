@@ -1,44 +1,68 @@
 package com.heavylink.controller;
 
+import java.awt.geom.Area;
+import java.net.URI;
 import java.util.List;
 
+import com.heavylink.Repository.IArea_Derecho;
+import com.heavylink.dto.ClienteDTO;
+import com.heavylink.dto.DocumentosLegalesDTO;
+import com.heavylink.model.Cliente;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.DocumentosLegales;
 import com.heavylink.service.IDocumentosLegalesService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.swing.event.DocumentEvent;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/documentos-legales")
+@RequestMapping("/documentos")
 @CrossOrigin(origins = "*")
 public class DocumentosLegalesController {
 
     private final IDocumentosLegalesService service;
 
+    ModelMapper modelMapper = new ModelMapper();
     @GetMapping
-    public List<DocumentosLegales> findAll() throws Exception {
-        return service.findAll();
-    }
+    public ResponseEntity<List<DocumentosLegalesDTO>> findAll() throws Exception {
+        List<DocumentosLegalesDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, DocumentosLegalesDTO.class)).toList();
 
+        return ResponseEntity.ok(list);
+    }
     @GetMapping("/{id}")
-    public DocumentosLegales findById(@PathVariable("id") Integer id) throws Exception {
-        return service.findById(id);
+    public ResponseEntity<DocumentosLegalesDTO> findById(@PathVariable Integer id) throws Exception {
+        DocumentosLegales obj = service.findById(id);
+
+        return ResponseEntity.ok(modelMapper.map(obj,DocumentosLegalesDTO.class));
     }
 
     @PostMapping
-    public DocumentosLegales save(@RequestBody DocumentosLegales documentosLegales) throws Exception {
-        return service.save(documentosLegales);
+    public ResponseEntity<Void> save(@RequestBody DocumentosLegalesDTO dto) throws Exception {
+        DocumentosLegales obj = service.save(modelMapper.map(dto, DocumentosLegales.class));
+
+        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
+        //localhost:9090/categories/4
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdDocumento()).toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public DocumentosLegales update(@PathVariable("id") Integer id, @RequestBody DocumentosLegales documentosLegales) throws Exception {
-        return service.update(documentosLegales, id);
+    public ResponseEntity<DocumentosLegalesDTO> update(@PathVariable Integer id, @RequestBody DocumentosLegalesDTO dto) throws Exception {
+        DocumentosLegales obj = service.update(modelMapper.map(dto, DocumentosLegales.class), id);
+        return ResponseEntity.ok(modelMapper.map(obj, DocumentosLegalesDTO.class));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 }

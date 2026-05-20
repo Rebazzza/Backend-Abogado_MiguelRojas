@@ -32,7 +32,7 @@ public class Especialista {
     private String estado;
 
     @Column(nullable = false)
-    private boolean dni;
+    private String dni;
     @Column(nullable = false)
     private boolean disponibilidad;
 

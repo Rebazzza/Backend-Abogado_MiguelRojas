@@ -37,7 +37,7 @@ public class Cliente {
     @Column(nullable = false)
     private boolean estado;
     @Column(nullable = false)
-    private boolean tipoCliente;
+    private String tipoCliente;
 
 
 

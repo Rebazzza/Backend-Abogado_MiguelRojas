@@ -32,10 +32,7 @@ public class Caso {
     private String descripcion;
 
     @Column(nullable = false, length = 30)
-    private boolean estado; 
-
-   
-   
+    private boolean estado;
     
     @ManyToOne
     @JoinColumn(name = "id_abogado", nullable = false, foreignKey = @ForeignKey(name = "FK_CASOS_Abogado"))
