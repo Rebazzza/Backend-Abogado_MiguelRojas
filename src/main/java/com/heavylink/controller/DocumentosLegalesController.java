@@ -1,13 +1,12 @@
 package com.heavylink.controller;
 
-import java.awt.geom.Area;
+
 import java.net.URI;
 import java.util.List;
 
-import com.heavylink.Repository.IArea_Derecho;
-import com.heavylink.dto.ClienteDTO;
+
 import com.heavylink.dto.DocumentosLegalesDTO;
-import com.heavylink.model.Cliente;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +17,7 @@ import com.heavylink.service.IDocumentosLegalesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.swing.event.DocumentEvent;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +27,7 @@ public class DocumentosLegalesController {
 
     private final IDocumentosLegalesService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<DocumentosLegalesDTO>> findAll() throws Exception {
         List<DocumentosLegalesDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, DocumentosLegalesDTO.class)).toList();

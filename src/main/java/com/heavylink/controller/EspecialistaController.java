@@ -1,6 +1,6 @@
 package com.heavylink.controller;
 
-import java.awt.geom.Area;
+
 import java.net.URI;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class EspecialistaController {
     private final IEspecialistaService service;
 
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<EspecialistaDTO>> findAll() throws Exception {
         List<EspecialistaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, EspecialistaDTO.class)).toList();

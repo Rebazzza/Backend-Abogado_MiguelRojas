@@ -26,7 +26,7 @@ public class AreasDerechoServiceImpl implements IAreasDerechoService {
 
     @Override
     public AreaDerecho update(AreaDerecho areaDerecho, Integer id) throws Exception {
-    	areaDerecho.setCodigoArea(id);
+    	areaDerecho.setIdArea(id);
         return repo.save(areaDerecho);
     }
 

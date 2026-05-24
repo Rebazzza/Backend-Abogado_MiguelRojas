@@ -1,11 +1,11 @@
 package com.heavylink.controller;
 
-import java.awt.geom.Area;
+
 import java.net.URI;
 import java.util.List;
 
 
-import com.heavylink.dto.CasoDTO;
+
 import com.heavylink.dto.CitaDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class CitaController {
 
     private final ICitasService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<CitaDTO>> findAll() throws Exception {
         List<CitaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, CitaDTO.class)).toList();

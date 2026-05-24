@@ -5,9 +5,9 @@ import java.net.URI;
 import java.util.List;
 
 
-import com.heavylink.dto.PagoDTO;
+
 import com.heavylink.dto.ServicioLegalDTO;
-import com.heavylink.model.Pago;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class ServicioLegalController {
 
     private final IServiciosLegalesService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<ServicioLegalDTO>> findAll() throws Exception {
         List<ServicioLegalDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, ServicioLegalDTO.class)).toList();

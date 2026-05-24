@@ -1,6 +1,6 @@
 package com.heavylink.controller;
 
-import java.awt.geom.Area;
+
 import java.net.URI;
 import java.util.List;
 
@@ -12,8 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.heavylink.model.Audiencia;
-import com.heavylink.service.IAudienciaService;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,7 +26,7 @@ public class AudienciaController {
     private final IAudienciaService service;
 
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AudienciaDTO>> findAll() throws Exception {
         List<AudienciaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AudienciaDTO.class)).toList();

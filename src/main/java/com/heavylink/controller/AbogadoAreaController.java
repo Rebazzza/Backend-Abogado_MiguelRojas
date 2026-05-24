@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AbogadoAreaController {
 
     private final IAbogadoAreaService service;
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AbogadoAreaDTO>> findAll() throws Exception {
         List<AbogadoAreaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AbogadoAreaDTO.class)).toList();

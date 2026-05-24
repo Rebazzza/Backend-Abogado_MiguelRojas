@@ -2,17 +2,18 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.service.IAbogadoServicioService;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAbogadoServicio;
 import com.heavylink.model.AbogadoServicio;
-import com.heavylink.service.IAbogadoServcioService;
+
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AbogadoServicioServiceImpl implements IAbogadoServcioService {
+public class AbogadoServicioServiceImpl implements IAbogadoServicioService {
 
     private final IAbogadoServicio repo;
 

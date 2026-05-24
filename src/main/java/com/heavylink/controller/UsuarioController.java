@@ -26,7 +26,7 @@ public class UsuarioController {
 
     private final IUsuarioService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> findAll() throws Exception {
         List<UsuarioDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, UsuarioDTO.class)).toList();

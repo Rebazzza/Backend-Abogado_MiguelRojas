@@ -3,9 +3,9 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
-import com.heavylink.dto.EspecialistaDTO;
+
 import com.heavylink.dto.ExpedienteDTO;
-import com.heavylink.model.Especialista;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class ExpedienteController {
 
     private final IExpedienteService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<ExpedienteDTO>> findAll() throws Exception {
         List<ExpedienteDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, ExpedienteDTO.class)).toList();

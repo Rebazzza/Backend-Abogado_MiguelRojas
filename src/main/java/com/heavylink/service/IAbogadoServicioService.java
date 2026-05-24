@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.heavylink.model.AbogadoServicio;
 
-public interface IAbogadoServcioService {
+public interface IAbogadoServicioService {
 	AbogadoServicio save(AbogadoServicio abogadoServicio) throws  Exception;
     AbogadoServicio update(AbogadoServicio abogadoServicio, Integer id) throws  Exception;
     List<AbogadoServicio> findAll() throws  Exception;

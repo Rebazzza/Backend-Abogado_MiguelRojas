@@ -1,6 +1,6 @@
 package com.heavylink.controller;
 
-import java.awt.geom.Area;
+
 import java.net.URI;
 import java.util.List;
 
@@ -24,8 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AreaDerechoController {
 
     private final IAreasDerechoService service;
-
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AreaDerechoDTO>> findAll() throws Exception {
         List<AreaDerechoDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AreaDerechoDTO.class)).toList();

@@ -5,9 +5,9 @@ import java.net.URI;
 import java.util.List;
 
 
-import com.heavylink.dto.ExpedienteDTO;
+
 import com.heavylink.dto.NotificacionDTO;
-import com.heavylink.model.Expediente;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class NotificacionController {
 
     private final INotificacionService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<NotificacionDTO>> findAll() throws Exception {
         List<NotificacionDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, NotificacionDTO.class)).toList();

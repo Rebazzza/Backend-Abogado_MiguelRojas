@@ -7,12 +7,13 @@ import java.util.List;
 import com.heavylink.dto.AbogadoServicioDTO;
 
 
+import com.heavylink.service.IAbogadoServicioService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.AbogadoServicio;
-import com.heavylink.service.IAbogadoServcioService;
+
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,9 +24,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @CrossOrigin(origins = "*")
 public class AbogadoServicioController {
 
-    private final IAbogadoServcioService service;
+    private final IAbogadoServicioService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AbogadoServicioDTO>> findAll() throws Exception {
         List<AbogadoServicioDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AbogadoServicioDTO.class)).toList();

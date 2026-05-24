@@ -3,9 +3,9 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
-import com.heavylink.dto.NotificacionDTO;
+
 import com.heavylink.dto.PagoDTO;
-import com.heavylink.model.Notificacion;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class PagoController {
     private final IPagoService service;
 
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<PagoDTO>> findAll() throws Exception {
         List<PagoDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, PagoDTO.class)).toList();

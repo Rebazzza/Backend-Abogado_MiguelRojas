@@ -25,7 +25,7 @@ public class ClienteController {
 
     private final IClienteService service;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll() throws Exception {
         List<ClienteDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, ClienteDTO.class)).toList();
