@@ -2,6 +2,10 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.Repository.ICliente;
+import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.Cliente;
+import com.heavylink.service.IClienteService;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.ICitas;
@@ -12,33 +16,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CitasServiceImpl implements ICitasService {
+public class CitasServiceImpl extends GenericService<Cita, Integer> implements ICitasService {
 
     private final ICitas repo;
 
     @Override
-    public Cita save(Cita cita) throws Exception {
-        return repo.save(cita);
-    }
-
-    @Override
-    public Cita update(Cita cita, Integer id) throws Exception {
-        cita.setIdCita(id);
-        return repo.save(cita);
-    }
-
-    @Override
-    public List<Cita> findAll() throws Exception {
-        return repo.findAll();
-    }
-
-    @Override
-    public Cita findById(Integer id) throws Exception {
-        return repo.findById(id).orElse(new Cita());
-    }
-
-    @Override
-    public void delete(Integer id) throws Exception {
-        repo.deleteById(id);
+    protected IGenericRepository<Cita, Integer> getRepo() {
+        return repo;
     }
 }

@@ -2,6 +2,10 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.Repository.ICliente;
+import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.Cliente;
+import com.heavylink.service.IClienteService;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IExpediente;
@@ -12,33 +16,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ExpedienteServiceImpl implements IExpedienteService {
+public class ExpedienteServiceImpl extends GenericService<Expediente, Integer> implements IExpedienteService {
 
     private final IExpediente repo;
 
     @Override
-    public Expediente save(Expediente expediente) throws Exception {
-        return repo.save(expediente);
-    }
-
-    @Override
-    public Expediente update(Expediente expediente, Integer id) throws Exception {
-        expediente.setIdExPediente(id);
-        return repo.save(expediente);
-    }
-
-    @Override
-    public List<Expediente> findAll() throws Exception {
-        return repo.findAll();
-    }
-
-    @Override
-    public Expediente findById(Integer id) throws Exception {
-        return repo.findById(id).orElse(new Expediente());
-    }
-
-    @Override
-    public void delete(Integer id) throws Exception {
-        repo.deleteById(id);
+    protected IGenericRepository<Expediente, Integer> getRepo() {
+        return repo;
     }
 }

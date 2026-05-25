@@ -2,6 +2,10 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.Repository.IAbogado;
+import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.Abogado;
+import com.heavylink.service.IAbogadoService;
 import org.springframework.stereotype.Service;
 
 
@@ -14,34 +18,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AreasDerechoServiceImpl implements IAreasDerechoService {
-
+public class AreasDerechoServiceImpl extends GenericService<AreaDerecho, Integer> implements IAreasDerechoService {
 
     private final IArea_Derecho repo;
 
     @Override
-    public AreaDerecho save(AreaDerecho areaDerecho) throws Exception {
-        return repo.save(areaDerecho);
-    }
-
-    @Override
-    public AreaDerecho update(AreaDerecho areaDerecho, Integer id) throws Exception {
-    	areaDerecho.setIdArea(id);
-        return repo.save(areaDerecho);
-    }
-
-    @Override
-    public List<AreaDerecho> findAll() throws Exception {
-        return repo.findAll();
-    }
-
-    @Override
-    public AreaDerecho findById(Integer id) throws Exception {
-        return repo.findById(id).orElse(new AreaDerecho());
-    }
-
-    @Override
-    public void delete(Integer id) throws Exception {
-        repo.deleteById(id);
+    protected IGenericRepository<AreaDerecho, Integer> getRepo() {
+        return repo;
     }
 }

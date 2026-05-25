@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.heavylink.model.Abogado;
 
-public interface IAbogado extends JpaRepository<Abogado,Integer>{
+public interface IAbogado extends IGenericRepository<Abogado,Integer>{
 
 }

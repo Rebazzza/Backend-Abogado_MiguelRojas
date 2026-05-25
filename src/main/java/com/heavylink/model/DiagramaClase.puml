@@ -1,0 +1,168 @@
+@startuml
+hide circle
+hide empty members
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam shadowing false
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+}
+
+title Diagrama de clases - Sistema legal HeavyLink
+
+package "com.heavylink.model" {
+
+class Usuario {
+  idUsuario : Integer
+  nombre : String
+  rol : String
+  contraseña : String
+}
+
+class Abogado {
+  idAbogado : Integer
+  nombre : String
+  apellido : String
+  telefono : String
+  dni : String
+  correo : String
+  especialidad : String
+  estado : boolean
+}
+
+class Cliente {
+  idCliente : Integer
+  nombre : String
+  descripcion : String
+  dni : String
+  RUC : String
+  telefono : String
+  dirección : String
+  correo : String
+  estado : boolean
+  tipoCliente : String
+}
+
+class Caso {
+  idCaso : Integer
+  titulo : String
+  descripcion : String
+  estado : boolean
+}
+
+class Cita {
+  idCita : Integer
+  asuntoLegal : String
+  detallesAdicionales : String
+  fechaHora : LocalDateTime
+  activa : boolean
+}
+
+class Audiencia {
+  idAudiencia : Integer
+  fecha : LocalDate
+  direccion : String
+  hora : LocalDateTime
+  tipoAudiencia : String
+  lugarLink : String
+}
+
+class Expediente {
+  idExPediente : Integer
+  titulo : String
+  tipoExpediente : String
+  resumenExpediente : String
+  estadoExpediente : boolean
+  fechaInicio : String
+  fechaCierre : String
+}
+
+class DocumentosLegales {
+  idDocumento : Integer
+  nombreArchivo : String
+  ruta : String
+  fechaCreacion : LocalDateTime
+}
+
+class Pago {
+  idPago : Integer
+  metodoPago : String
+  estadoPago : boolean
+  monto : float
+  fechaPago : LocalDateTime
+}
+
+class Notificacion {
+  idNotificacion : Integer
+  titulo : String
+  mensaje : String
+  leido : boolean
+  fecha : LocalDateTime
+}
+
+class AreaDerecho {
+  idArea : Integer
+  nombre : String
+  descripcion : String
+  estado : boolean
+}
+
+class ServicioLegal {
+  idServicio : Integer
+  nombre : String
+  descripcion : String
+  estado : String
+  costoBase : Float
+}
+
+class AbogadoArea {
+  idAbogadoArea : Integer
+}
+
+class AbogadoServicio {
+  idAbogadoServicio : Integer
+}
+
+class Especialista {
+  idEspecialista : Integer
+  nombre : String
+  descripcion : String
+  estado : String
+  dni : String
+  disponibilidad : boolean
+  telefono : String
+  correo : String
+}
+
+}
+
+Usuario "1" -- "1" Abogado : perfil
+
+Abogado "1" -- "0..*" Caso : lleva
+Cliente "1" -- "0..*" Caso : tiene
+
+Abogado "1" -- "0..*" Cita : atiende
+Cliente "1" -- "0..*" Cita : agenda
+
+Abogado "1" -- "0..*" Audiencia : participa
+Caso "1" -- "0..*" Audiencia : genera
+
+Caso "1" -- "1" Expediente : expediente
+Expediente "1" -- "0..*" DocumentosLegales : contiene
+Caso "1" -- "0..*" Pago : registra
+
+Usuario "1" -- "0..*" Notificacion : recibe
+
+Abogado "1" -- "0..*" AbogadoArea
+AreaDerecho "1" -- "0..*" AbogadoArea
+
+Abogado "1" -- "0..*" AbogadoServicio
+ServicioLegal "1" -- "0..*" AbogadoServicio
+
+note bottom of Especialista
+Actualmente no tiene relaciones
+definidas en los modelos.
+end note
+
+@enduml

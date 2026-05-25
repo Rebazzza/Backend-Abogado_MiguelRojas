@@ -2,6 +2,10 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.Repository.IAbogadoArea;
+import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.AbogadoArea;
+import com.heavylink.service.IAbogadoAreaService;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAbogado;
@@ -12,33 +16,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AbogadoServiceImpl implements IAbogadoService {
+public class AbogadoServiceImpl extends GenericService<Abogado, Integer> implements IAbogadoService {
 
     private final IAbogado repo;
 
     @Override
-    public Abogado save(Abogado abogado) throws Exception {
-        return repo.save(abogado);
-    }
-
-    @Override
-    public Abogado update(Abogado abogado, Integer id) throws Exception {
-        abogado.setIdAbogado(id);
-        return repo.save(abogado);
-    }
-
-    @Override
-    public List<Abogado> findAll() throws Exception {
-        return repo.findAll();
-    }
-
-    @Override
-    public Abogado findById(Integer id) throws Exception {
-        return repo.findById(id).orElse(new Abogado());
-    }
-
-    @Override
-    public void delete(Integer id) throws Exception {
-        repo.deleteById(id);
+    protected IGenericRepository<Abogado, Integer> getRepo() {
+        return repo;
     }
 }

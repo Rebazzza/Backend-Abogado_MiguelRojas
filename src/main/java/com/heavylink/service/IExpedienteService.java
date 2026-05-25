@@ -2,12 +2,9 @@ package com.heavylink.service;
 
 import java.util.List;
 
+import com.heavylink.model.Abogado;
 import com.heavylink.model.Expediente;
 
-public interface IExpedienteService {
-	Expediente save(Expediente expediente) throws  Exception;
-	Expediente update(Expediente expediente, Integer id) throws  Exception;
-    List<Expediente> findAll() throws  Exception;
-    Expediente findById(Integer id) throws  Exception;
-    void delete(Integer id) throws  Exception;
+public interface IExpedienteService extends IGenericService<Expediente,Integer>{
+
 }

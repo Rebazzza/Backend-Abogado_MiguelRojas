@@ -2,6 +2,9 @@ package com.heavylink.service.implementations;
 
 import java.util.List;
 
+import com.heavylink.Repository.ICliente;
+import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.Cliente;
 import com.heavylink.model.Notificacion;
 import org.springframework.stereotype.Service;
 
@@ -12,34 +15,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class NotificacionServiceImpl implements INotificacionService {
-
+public class NotificacionServiceImpl extends GenericService<Notificacion, Integer> implements INotificacionService {
 
     private final INotificacion repo;
 
     @Override
-    public Notificacion save(Notificacion notificacion ) throws Exception {
-        return repo.save(notificacion);
-    }
-
-    @Override
-    public Notificacion update(Notificacion notificacion, Integer id) throws Exception {
-    	notificacion.setIdNotificacion(id);
-        return repo.save(notificacion);
-    }
-
-    @Override
-    public List<Notificacion> findAll() throws Exception {
-        return repo.findAll();
-    }
-
-    @Override
-    public Notificacion findById(Integer id) throws Exception {
-        return repo.findById(id).orElse(new Notificacion());
-    }
-
-    @Override
-    public void delete(Integer id) throws Exception {
-        repo.deleteById(id);
+    protected IGenericRepository<Notificacion, Integer> getRepo() {
+        return repo;
     }
 }

@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.heavylink.model.Cita;
 
-public interface ICitas extends JpaRepository<Cita, Integer> {
+public interface ICitas extends IGenericRepository<Cita, Integer> {
 
 }

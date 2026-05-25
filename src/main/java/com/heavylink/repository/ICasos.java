@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.heavylink.model.Caso;
 
-public interface ICasos extends JpaRepository<Caso, Integer> {
+public interface ICasos extends IGenericRepository<Caso, Integer> {
 
 }

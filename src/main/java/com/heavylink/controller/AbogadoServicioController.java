@@ -26,7 +26,7 @@ public class AbogadoServicioController {
 
     private final IAbogadoServicioService service;
 
-    private final ModelMapper modelMapper;
+    private final ModelMapper modelMapper;  
     @GetMapping
     public ResponseEntity<List<AbogadoServicioDTO>> findAll() throws Exception {
         List<AbogadoServicioDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AbogadoServicioDTO.class)).toList();
