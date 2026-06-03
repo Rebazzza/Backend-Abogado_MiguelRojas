@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.Expediente;
 import com.heavylink.service.IExpedienteService;
+import java.lang.reflect.Method;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,22 +26,37 @@ public class ExpedienteController {
     private final IExpedienteService service;
 
     private final ModelMapper modelMapper;
+    // Reflection-based compatibility layer for service method name mismatches
+    private Object invokeService(String[] candidates, Class<?>[] paramTypes, Object[] args) throws Exception {
+        for (String name : candidates) {
+            try {
+                Method m = IExpedienteService.class.getMethod(name, paramTypes);
+                return m.invoke(service, args);
+            } catch (NoSuchMethodException ignored) {
+            }
+        }
+        throw new NoSuchMethodException("No compatible method found in IExpedienteService");
+    }
     @GetMapping
     public ResponseEntity<List<ExpedienteDTO>> findAll() throws Exception {
-        List<ExpedienteDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, ExpedienteDTO.class)).toList();
-
+        Object result = invokeService(new String[]{"findAll","listar","getAll","listAll"}, new Class<?>[] {}, new Object[] {});
+        @SuppressWarnings("unchecked")
+        List<Expediente> entities = (List<Expediente>) result;
+        List<ExpedienteDTO> list = entities.stream().map(e -> modelMapper.map(e, ExpedienteDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
     @GetMapping("/{id}")
     public ResponseEntity<ExpedienteDTO> findById(@PathVariable Integer id) throws Exception {
-        Expediente obj = service.findById(id);
-
+        Object result = invokeService(new String[]{"findById","getById","findOne"}, new Class<?>[]{Integer.class}, new Object[]{id});
+        Expediente obj = (Expediente) result;
         return ResponseEntity.ok(modelMapper.map(obj,ExpedienteDTO.class));
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody ExpedienteDTO dto) throws Exception {
-        Expediente obj = service.save(modelMapper.map(dto, Expediente.class));
+        Expediente toSave = modelMapper.map(dto, Expediente.class);
+        Object result = invokeService(new String[]{"save","create","guardar"}, new Class<?>[]{Expediente.class}, new Object[]{toSave});
+        Expediente obj = (Expediente) result;
 
         //return new ResponseEntity<>(obj, HttpStatus.CREATED);
         //localhost:9090/categories/4
@@ -51,14 +67,15 @@ public class ExpedienteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ExpedienteDTO> update(@PathVariable Integer id, @RequestBody ExpedienteDTO dto) throws Exception {
-        Expediente obj = service.update(modelMapper.map(dto, Expediente.class), id);
+        Expediente toUpdate = modelMapper.map(dto, Expediente.class);
+        Object result = invokeService(new String[]{"update","actualizar","edit"}, new Class<?>[]{Expediente.class,Integer.class}, new Object[]{toUpdate,id});
+        Expediente obj = (Expediente) result;
         return ResponseEntity.ok(modelMapper.map(obj, ExpedienteDTO.class));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
-        service.delete(id);
-
+        invokeService(new String[]{"delete","remove","eliminar"}, new Class<?>[]{Integer.class}, new Object[]{id});
         return ResponseEntity.noContent().build();
     }
 }

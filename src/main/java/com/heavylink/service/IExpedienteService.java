@@ -1,10 +1,12 @@
 package com.heavylink.service;
 
+import com.heavylink.model.Expediente;
 import java.util.List;
 
-import com.heavylink.model.Abogado;
-import com.heavylink.model.Expediente;
-
-public interface IExpedienteService extends IGenericService<Expediente,Integer>{
-
+public interface IExpedienteService {
+    Expediente registrar(Expediente expediente) throws Exception;
+    Expediente modificar(Expediente expediente) throws Exception;
+    List<Expediente> listar() throws Exception;
+    Expediente leerPorId(Integer id) throws Exception;
+    void eliminar(Integer id) throws Exception;
 }
