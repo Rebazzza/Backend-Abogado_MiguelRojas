@@ -14,6 +14,6 @@ public class DocumentosLegalesDTO {
     private String nombreArchivo;
     private String ruta;
     private LocalDateTime fechaCreacion;
-    private Expediente expediente;
+    private Integer idExpediente;
 
 }

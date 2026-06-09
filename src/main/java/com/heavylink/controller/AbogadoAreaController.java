@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.heavylink.dto.AbogadoAreaDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AbogadoAreaController {
 
     private final IAbogadoAreaService service;
+    @Qualifier("abogadoAreaMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AbogadoAreaDTO>> findAll() throws Exception {

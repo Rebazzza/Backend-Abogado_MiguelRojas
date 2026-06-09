@@ -21,6 +21,6 @@ public class NotificacionDTO {
     private String mensaje;
     private boolean leido;
     private LocalDateTime fecha;
-    private Usuario usuario;
+    private Integer idUsuario;
 
 }

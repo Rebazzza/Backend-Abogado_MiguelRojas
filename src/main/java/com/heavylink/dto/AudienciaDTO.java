@@ -20,10 +20,10 @@ public class AudienciaDTO {
     private Integer idAudiencia;
     private LocalDate fecha;
     private String direccion;
-    private Abogado abogado;
+    private Integer idAbogado;
     private LocalDateTime hora;
     private String  tipoAudiencia;
     private String lugarLink;
-    private Caso caso;
+    private Integer idCaso;
 
 }

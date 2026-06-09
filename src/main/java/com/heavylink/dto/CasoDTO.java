@@ -16,6 +16,6 @@ public class CasoDTO {
     private String titulo;
     private String descripcion;
     private boolean estado;
-    private Abogado abogado;
-    private Cliente cliente;
+    private Integer idAbogado;
+    private Integer idCliente;
 }

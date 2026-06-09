@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbogadoAreaDTO {
+    @NotNull
     private Integer idAbogadoArea;
-    private String abogado;
-    private String area;
+    private Integer intAbogado;
+    private Integer idArea;
 
 }

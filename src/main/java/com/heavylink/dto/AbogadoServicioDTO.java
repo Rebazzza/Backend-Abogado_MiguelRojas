@@ -14,5 +14,5 @@ import com.heavylink.model.ServicioLegal;
 public class AbogadoServicioDTO {
     private Integer idAbogadoServicio;
     private Abogado abogado;
-    private ServicioLegal servicio;
+    private Integer idServicioLegal;
 }

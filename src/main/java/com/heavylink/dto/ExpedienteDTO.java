@@ -22,5 +22,5 @@ public class ExpedienteDTO {
     private boolean estadoExpediente;
     private String fechaInicio;
     private String fechaCierre;
-    private Caso caso;
+    private Integer idCaso;
 }

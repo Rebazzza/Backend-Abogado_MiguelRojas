@@ -10,17 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicioLegalDTO {
-
     private Integer idServicio;
-
-
     private String nombre;
-
-
     private String descripcion;
-
-
     private String estado;
-
     private Float costoBase;
 }

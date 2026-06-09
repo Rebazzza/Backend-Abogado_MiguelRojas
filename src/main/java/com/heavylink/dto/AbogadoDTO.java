@@ -18,4 +18,5 @@ public class AbogadoDTO {
     private String correo;
     private String especialidad;
     private boolean estado;
+    private Integer idUsuario;
 }

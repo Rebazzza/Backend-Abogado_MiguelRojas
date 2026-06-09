@@ -51,11 +51,9 @@ public class AbogadoController {
         Abogado obj = service.update(modelMapper.map(dto, Abogado.class), id);
         return ResponseEntity.ok(modelMapper.map(obj, AbogadoDTO.class));
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
-
         return ResponseEntity.noContent().build();
     }
 }

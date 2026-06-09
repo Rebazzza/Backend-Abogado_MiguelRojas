@@ -21,5 +21,5 @@ public class PagoDTO {
     private boolean estadoPago;
     private float monto;
     private LocalDateTime fechaPago;
-    private Caso caso;
+    private Integer idCaso;
 }

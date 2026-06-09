@@ -17,6 +17,6 @@ public class CitaDTO {
     private String detallesAdicionales;
     private LocalDateTime fechaHora;
     private boolean activa;
-    private Cliente cliente;
-    private Abogado abogado;
+    private Integer idCliente;
+    private Integer idAbogado;
 }
