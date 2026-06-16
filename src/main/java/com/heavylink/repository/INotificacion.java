@@ -1,4 +1,4 @@
-package com.heavylink.repository;
+package com.heavylink.Repository;
 
 import com.heavylink.model.Notificacion;
 
