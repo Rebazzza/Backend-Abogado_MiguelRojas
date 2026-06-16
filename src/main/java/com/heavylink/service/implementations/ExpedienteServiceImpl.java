@@ -1,7 +1,5 @@
 package com.heavylink.service.implementations;
 
-
-
 import com.heavylink.model.Expediente;
 import com.heavylink.Repository.IExpediente;
 import com.heavylink.Repository.IGenericRepository;

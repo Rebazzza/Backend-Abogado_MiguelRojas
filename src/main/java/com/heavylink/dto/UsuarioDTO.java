@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UsuarioDTO {
     private Integer idUsuario;
-    private String nombre;
+    private String username;
     private String rol;
-    private String contraseña;
+    private String password;
 	
 	
 	

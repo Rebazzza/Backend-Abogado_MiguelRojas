@@ -39,9 +39,9 @@ public class LoginController {
 
             ResponseCookie cookie = ResponseCookie.from("jwt", accessToken)
                     .httpOnly(true)
-                    .secure(false)
+                    .secure(true)
                     .path("/")
-                    .sameSite("Lax")
+                    .sameSite("None")
                     .maxAge(Duration.ofHours(5))
                     .build();
 
@@ -68,9 +68,9 @@ public class LoginController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
         ResponseCookie cookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .path("/")
-                .sameSite("Lax")
+                .sameSite("None")
                 .maxAge(0)
                 .build();
 

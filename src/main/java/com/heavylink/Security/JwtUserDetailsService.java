@@ -1,5 +1,5 @@
 package com.heavylink.Security;
-
+import org.springframework.security.core.userdetails.User;
 import com.heavylink.model.Usuario;
 import com.heavylink.Repository.IUsuario;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +22,37 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // 1. Buscamos el usuario en tu base de datos
         Usuario user = repo.findOneByUsername(username);
 
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
         List<GrantedAuthority> roles = new ArrayList<>();
-        user.getRoles().forEach(role -> roles.add(new SimpleGrantedAuthority(role.getName())));
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), roles);
+        try {
+            // 2. Intentamos cargar los roles reales de la base de datos
+            if (user.getRoles() != null && !user.getRoles().isEmpty()) {
+                user.getRoles().forEach(role -> {
+                    // He puesto un condicional por si acaso tu entidad usa 'getNombre()' en vez de 'getName()'
+                    String roleName = role.getName() != null ? role.getName() : "ROLE_USER";
+                    roles.add(new SimpleGrantedAuthority(roleName));
+                });
+            } else {
+                // Si el usuario no tiene roles asignados en la BD, le asignamos uno por defecto para que no explote
+                roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+            }
+        } catch (Exception e) {
+            System.out.println("⚠️ Alerta: Error cargando roles perezosos (Lazy). Usando rol por defecto. " + e.getMessage());
+            roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+
+        // 3. Retornamos el usuario listo para Spring Security
+        return new User(
+                user.getUsername(),
+                user.getPassword(),
+                roles
+        );
     }
 }

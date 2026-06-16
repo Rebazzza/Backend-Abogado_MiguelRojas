@@ -1,4 +1,4 @@
-package com.heavylink.Security;
+package com.heavylink.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

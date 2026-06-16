@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AbogadoAreaController {
 
     private final IAbogadoAreaService service;
-    @Qualifier("abogadoAreaMapper")
+    
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AbogadoAreaDTO>> findAll() throws Exception {
