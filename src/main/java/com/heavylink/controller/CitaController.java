@@ -7,7 +7,10 @@ import java.util.List;
 
 
 import com.heavylink.dto.CitaDTO;
+import com.heavylink.model.Abogado;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +64,11 @@ public class CitaController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Cita>> listPageable(Pageable pageable){
+        Page<Cita> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 
 }

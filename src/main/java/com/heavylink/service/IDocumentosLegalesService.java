@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.heavylink.model.Abogado;
 import com.heavylink.model.DocumentosLegales;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IDocumentosLegalesService extends IGenericService<DocumentosLegales,Integer>{
-
+    Page<DocumentosLegales> listPage(Pageable pageable);
 }

@@ -5,10 +5,13 @@ import java.net.URI;
 import java.util.List;
 
 
+import com.heavylink.model.Abogado;
 import com.heavylink.service.IAudienciaService;
 import com.heavylink.dto.AudienciaDTO;
 import com.heavylink.model.Audiencia;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +65,10 @@ public class AudienciaController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Audiencia>> listPageable(Pageable pageable){
+        Page<Audiencia> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 }

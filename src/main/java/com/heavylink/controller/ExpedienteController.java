@@ -6,7 +6,10 @@ import java.util.List;
 
 import com.heavylink.dto.ExpedienteDTO;
 
+import com.heavylink.model.Abogado;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,5 +80,10 @@ public class ExpedienteController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         invokeService(new String[]{"delete","remove","eliminar"}, new Class<?>[]{Integer.class}, new Object[]{id});
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Expediente>> listPageable(Pageable pageable){
+        Page<Expediente> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 }

@@ -7,7 +7,10 @@ import java.util.List;
 
 import com.heavylink.dto.AreaDerechoDTO;
 
+import com.heavylink.model.Abogado;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +63,11 @@ public class AreaDerechoController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<AreaDerecho>> listPageable(Pageable pageable){
+        Page<AreaDerecho> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 
 }

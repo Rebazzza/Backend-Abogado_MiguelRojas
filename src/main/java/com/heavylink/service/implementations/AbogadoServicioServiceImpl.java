@@ -21,4 +21,5 @@ public class AbogadoServicioServiceImpl extends GenericService<AbogadoServicio, 
     protected IGenericRepository<AbogadoServicio, Integer> getRepo() {
         return repo;
     }
+
 }

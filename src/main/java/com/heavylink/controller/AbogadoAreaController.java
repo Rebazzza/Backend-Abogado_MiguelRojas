@@ -4,10 +4,18 @@ import java.net.URI;
 import java.util.List;
 
 import com.heavylink.dto.AbogadoAreaDTO;
+import com.heavylink.model.Abogado;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.util.List;
 
 import com.heavylink.model.AbogadoArea;
 import com.heavylink.service.IAbogadoAreaService;
@@ -22,15 +30,17 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AbogadoAreaController {
 
     private final IAbogadoAreaService service;
-    
+
     private final ModelMapper modelMapper;
+
     @GetMapping
     public ResponseEntity<List<AbogadoAreaDTO>> findAll() throws Exception {
         List<AbogadoAreaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, AbogadoAreaDTO.class)).toList();
 
         return ResponseEntity.ok(list);
     }
-    @GetMapping("/{id}")
+    @PreAuthorize("@authorizeLogic.hasAccess('findAll')")
+    @GetMapping
     public ResponseEntity<AbogadoAreaDTO> findById(@PathVariable Integer id) throws Exception {
         AbogadoArea obj = service.findById(id);
 
@@ -60,4 +70,7 @@ public class AbogadoAreaController {
 
         return ResponseEntity.noContent().build();
     }
+    
+
+
 }

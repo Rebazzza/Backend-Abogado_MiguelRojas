@@ -13,6 +13,6 @@ import com.heavylink.model.ServicioLegal;
 @AllArgsConstructor
 public class AbogadoServicioDTO {
     private Integer idAbogadoServicio;
-    private Abogado abogado;
+    private Integer idAbogado;
     private Integer idServicioLegal;
 }

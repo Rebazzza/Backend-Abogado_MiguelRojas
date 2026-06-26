@@ -8,7 +8,10 @@ import java.util.List;
 
 import com.heavylink.dto.EspecialistaDTO;
 
+import com.heavylink.model.Abogado;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,5 +66,10 @@ public class EspecialistaController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Especialista>> listPageable(Pageable pageable){
+        Page<Especialista> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 }

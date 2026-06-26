@@ -3,6 +3,9 @@ package com.heavylink.service.implementations;
 import java.util.List;
 
 import com.heavylink.Repository.IGenericRepository;
+import com.heavylink.model.Abogado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAudiencia;
@@ -20,5 +23,9 @@ public class AudienciaServiceImpl extends GenericService<Audiencia, Integer> imp
     @Override
     protected IGenericRepository<Audiencia, Integer> getRepo() {
         return repo;
+    }
+    @Override
+    public Page<Audiencia> listPage(Pageable pageable) {
+        return repo.findAll(pageable);
     }
 }

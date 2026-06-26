@@ -4,6 +4,9 @@ package com.heavylink.service.implementations;
 
 import com.heavylink.Repository.IGenericRepository;
 
+import com.heavylink.model.Abogado;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +37,9 @@ public class UsuarioServiceImpl extends GenericService<Usuario, Integer> impleme
         @Override
     public void changePassword(String username, String newPassword) {
         repo.changePassword(username, bcrypt.encode(newPassword));
+    }
+    @Override
+    public Page<Usuario> listPage(Pageable pageable) {
+        return repo.findAll(pageable);
     }
 }

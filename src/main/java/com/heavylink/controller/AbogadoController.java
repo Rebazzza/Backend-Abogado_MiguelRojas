@@ -7,6 +7,8 @@ import com.heavylink.dto.AbogadoDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.heavylink.model.Abogado;
 import com.heavylink.service.IAbogadoService;
@@ -55,5 +57,10 @@ public class AbogadoController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<Abogado>> listPageable(Pageable pageable){
+        Page<Abogado> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 }

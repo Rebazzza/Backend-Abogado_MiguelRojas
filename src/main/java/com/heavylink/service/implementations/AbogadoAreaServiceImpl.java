@@ -1,10 +1,12 @@
 package com.heavylink.service.implementations;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 
 import com.heavylink.Repository.IGenericRepository;
 import jdk.jfr.Category;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAbogadoArea;
@@ -22,5 +24,9 @@ public class AbogadoAreaServiceImpl extends GenericService<AbogadoArea, Integer>
     @Override
     protected IGenericRepository<AbogadoArea, Integer> getRepo() {
         return repo;
+    }
+    @Override
+    public Page<AbogadoArea> listPage(Pageable pageable) {
+        return repo.findAll(pageable);
     }
 }
