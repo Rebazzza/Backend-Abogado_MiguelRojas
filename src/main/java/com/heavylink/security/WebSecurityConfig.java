@@ -1,4 +1,4 @@
-package com.heavylink.Security;
+package com.heavylink.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final UserDetailsService jwtUserDetailsService;
-    private final JwtRequestFilte jwtRequestFilter;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -49,24 +49,10 @@ public class WebSecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                //.csrf().disable()
-                //.formLogin().disable()
+
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/mail/**").permitAll()
-                        .requestMatchers("/clientes/**").permitAll()
-                        .requestMatchers("/abogados/**").permitAll()
-                        .requestMatchers("/casos/**").permitAll()
-                        .requestMatchers("/audiencias/**").permitAll()
-                        .requestMatchers("/expedientes/**").permitAll()
-                        .requestMatchers("/especialistas/**").permitAll()
-                        .requestMatchers("/pagos/**").permitAll()
-                        .requestMatchers("/areas/**").permitAll()
-                        .requestMatchers("/usuarios/**").permitAll()
-                        .requestMatchers("/citas/**").permitAll()
-                        .requestMatchers("/notificaciones/**").permitAll()
-                        .requestMatchers("/servicios/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(e -> e.authenticationEntryPoint(jwtAuthenticationEntryPoint))

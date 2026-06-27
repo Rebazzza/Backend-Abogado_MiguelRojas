@@ -4,7 +4,12 @@ import java.net.URI;
 import java.util.List;
 
 import com.heavylink.dto.AbogadoDTO;
+import com.heavylink.model.Usuario;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
@@ -19,10 +24,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/abogados")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class AbogadoController {
 
     private final IAbogadoService service;
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AbogadoDTO>> findAll() throws Exception {
@@ -38,18 +44,15 @@ public class AbogadoController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody AbogadoDTO dto) throws Exception {
+    public ResponseEntity<Void> save(@Valid @RequestBody AbogadoDTO dto) throws Exception {
         Abogado obj = service.save(modelMapper.map(dto, Abogado.class));
-
-        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        //localhost:9090/categories/4
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAbogado()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AbogadoDTO> update(@PathVariable Integer id, @RequestBody AbogadoDTO dto) throws Exception {
+    public ResponseEntity<AbogadoDTO> update(@PathVariable Integer id,@Valid @RequestBody AbogadoDTO dto) throws Exception {
         Abogado obj = service.update(modelMapper.map(dto, Abogado.class), id);
         return ResponseEntity.ok(modelMapper.map(obj, AbogadoDTO.class));
     }
@@ -57,6 +60,30 @@ public class AbogadoController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<AbogadoDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
+
+        Abogado obj = service.findById(id);
+
+        AbogadoDTO dto = modelMapper.map(obj, AbogadoDTO.class);
+
+        EntityModel<AbogadoDTO> entityModel = EntityModel.of(dto);
+
+        WebMvcLinkBuilder link1 = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AbogadoController.class).findById(id));
+
+        WebMvcLinkBuilder link2 = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AbogadoController.class).findAll());
+
+
+        WebMvcLinkBuilder link3 = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AreaDerechoController.class).findAll());
+
+        entityModel.add(link1.withRel("abogado-self-info"));
+        entityModel.add(link2.withRel("abogado-all-list"));
+        entityModel.add(link3.withRel("areas-derecho-list"));
+        return entityModel;
     }
     @GetMapping("/pageable")
     public ResponseEntity<Page<Abogado>> listPageable(Pageable pageable){

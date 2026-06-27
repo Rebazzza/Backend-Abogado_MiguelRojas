@@ -1,12 +1,10 @@
 package com.heavylink.service.implementations;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
-
 import com.heavylink.Repository.IGenericRepository;
-import jdk.jfr.Category;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.heavylink.Repository.IAbogadoArea;

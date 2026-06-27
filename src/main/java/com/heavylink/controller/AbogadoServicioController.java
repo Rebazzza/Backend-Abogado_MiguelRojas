@@ -8,7 +8,9 @@ import com.heavylink.dto.AbogadoServicioDTO;
 
 
 import com.heavylink.service.IAbogadoServicioService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,11 +23,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/abogado-servicios")
-@CrossOrigin(origins = "*")
+
 public class AbogadoServicioController {
 
     private final IAbogadoServicioService service;
-
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;  
     @GetMapping
     public ResponseEntity<List<AbogadoServicioDTO>> findAll() throws Exception {
@@ -41,7 +43,7 @@ public class AbogadoServicioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody AbogadoServicioDTO dto) throws Exception {
+    public ResponseEntity<Void> save(@Valid @RequestBody AbogadoServicioDTO dto) throws Exception {
         AbogadoServicio obj = service.save(modelMapper.map(dto, AbogadoServicio.class));
 
         //return new ResponseEntity<>(obj, HttpStatus.CREATED);
@@ -52,7 +54,7 @@ public class AbogadoServicioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AbogadoServicioDTO> update(@PathVariable Integer id, @RequestBody AbogadoServicioDTO dto) throws Exception {
+    public ResponseEntity<AbogadoServicioDTO> update(@PathVariable Integer id,@Valid @RequestBody AbogadoServicioDTO dto) throws Exception {
         AbogadoServicio obj = service.update(modelMapper.map(dto, AbogadoServicio.class), id);
         return ResponseEntity.ok(modelMapper.map(obj, AbogadoServicioDTO.class));
     }

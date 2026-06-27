@@ -1,4 +1,4 @@
-package com.heavylink.Security;
+package com.heavylink.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -9,9 +9,13 @@ import com.heavylink.model.Abogado;
 import com.heavylink.service.IAudienciaService;
 import com.heavylink.dto.AudienciaDTO;
 import com.heavylink.model.Audiencia;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +27,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/audiencias")
-@CrossOrigin(origins = "*")
+
 public class AudienciaController {
 
     private final IAudienciaService service;
-
-
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<AudienciaDTO>> findAll() throws Exception {
@@ -44,18 +47,15 @@ public class AudienciaController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody AudienciaDTO dto) throws Exception {
+    public ResponseEntity<Void> save(@Valid @RequestBody AudienciaDTO dto) throws Exception {
         Audiencia obj = service.save(modelMapper.map(dto, Audiencia.class));
-
-        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        //localhost:9090/categories/4
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAudiencia()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AudienciaDTO> update(@PathVariable Integer id, @RequestBody AudienciaDTO dto) throws Exception {
+    public ResponseEntity<AudienciaDTO> update(@PathVariable Integer id,@Valid @RequestBody AudienciaDTO dto) throws Exception {
         Audiencia obj = service.update(modelMapper.map(dto, Audiencia.class), id);
         return ResponseEntity.ok(modelMapper.map(obj, AudienciaDTO.class));
     }
@@ -66,6 +66,20 @@ public class AudienciaController {
 
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<AudienciaDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
+        Audiencia obj = service.findById(id);
+        AudienciaDTO dto = modelMapper.map(obj, AudienciaDTO.class);
+        EntityModel<AudienciaDTO> entityModel = EntityModel.of(dto);
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AudienciaController.class).findById(id)).withRel("audiencia-self-info"));
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AudienciaController.class).findAll()).withRel("audiencia-all-list"));
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(CasoController.class).findAll()).withRel("casos-list"));
+        return entityModel;
+    }
+
     @GetMapping("/pageable")
     public ResponseEntity<Page<Audiencia>> listPageable(Pageable pageable){
         Page<Audiencia> page =service.listPage(pageable);

@@ -9,9 +9,13 @@ import java.util.List;
 import com.heavylink.dto.ServicioLegalDTO;
 
 import com.heavylink.model.Abogado;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +28,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/servicios")
-@CrossOrigin(origins = "*")
+
 public class ServicioLegalController {
 
     private final IServiciosLegalesService service;
-
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<ServicioLegalDTO>> findAll() throws Exception {
@@ -44,7 +48,7 @@ public class ServicioLegalController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ServicioLegalDTO dto) throws Exception {
+    public ResponseEntity<Void> save(@Valid  @RequestBody ServicioLegalDTO dto) throws Exception {
         ServicioLegal obj = service.save(modelMapper.map(dto, ServicioLegal.class));
 
         //return new ResponseEntity<>(obj, HttpStatus.CREATED);
@@ -55,7 +59,7 @@ public class ServicioLegalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ServicioLegalDTO> update(@PathVariable Integer id, @RequestBody ServicioLegalDTO dto) throws Exception {
+    public ResponseEntity<ServicioLegalDTO> update(@PathVariable Integer id,@Valid @RequestBody ServicioLegalDTO dto) throws Exception {
         ServicioLegal obj = service.update(modelMapper.map(dto, ServicioLegal.class), id);
         return ResponseEntity.ok(modelMapper.map(obj, ServicioLegalDTO.class));
     }
@@ -66,6 +70,20 @@ public class ServicioLegalController {
 
         return ResponseEntity.noContent().build();
     }
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<ServicioLegalDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
+        ServicioLegal obj = service.findById(id);
+        ServicioLegalDTO dto = modelMapper.map(obj, ServicioLegalDTO.class);
+        EntityModel<ServicioLegalDTO> entityModel = EntityModel.of(dto);
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(ServicioLegalController.class).findById(id)).withRel("servicio-self-info"));
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(ServicioLegalController.class).findAll()).withRel("servicio-all-list"));
+        entityModel.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(AbogadoController.class).findAll()).withRel("abogados-list"));
+        return entityModel;
+    }
+
     @GetMapping("/pageable")
     public ResponseEntity<Page<ServicioLegal>> listPageable(Pageable pageable){
         Page<ServicioLegal> page =service.listPage(pageable);

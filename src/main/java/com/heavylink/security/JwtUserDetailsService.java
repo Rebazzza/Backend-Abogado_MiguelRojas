@@ -1,4 +1,4 @@
-package com.heavylink.Security;
+package com.heavylink.security;
 import org.springframework.security.core.userdetails.User;
 import com.heavylink.model.Usuario;
 import com.heavylink.Repository.IUsuario;

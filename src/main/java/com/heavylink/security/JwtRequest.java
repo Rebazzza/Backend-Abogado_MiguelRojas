@@ -1,4 +1,4 @@
-package com.heavylink.Security;
+package com.heavylink.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
