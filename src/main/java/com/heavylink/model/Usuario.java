@@ -23,9 +23,6 @@ public class Usuario {
     @Column(nullable = false, length = 50)
     private String username; // <-- Cambiado de 'nombre' a 'username'
 
-    @Column(nullable = false, length = 50)
-    private String rol;
-
     @Column(nullable = false, length = 60) // Nota: Bcrypt para contraseñas suele requerir 60 caracteres
     private String password; // <-- Cambiado de 'contraseña' a 'password' y evitamos la 'ñ'
 

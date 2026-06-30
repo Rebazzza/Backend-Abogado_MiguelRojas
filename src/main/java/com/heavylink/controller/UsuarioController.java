@@ -9,6 +9,8 @@ import java.util.List;
 import com.heavylink.dto.UsuarioDTO;
 
 import com.heavylink.model.Abogado;
+import com.heavylink.model.Rol;
+import com.heavylink.Repository.IRol;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.heavylink.model.Usuario;
@@ -32,48 +35,67 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class UsuarioController {
 
     private final IUsuarioService service;
+    private final IRol rolRepo;
+    private final PasswordEncoder passwordEncoder;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
+
+    private UsuarioDTO toDto(Usuario entity) {
+        UsuarioDTO dto = modelMapper.map(entity, UsuarioDTO.class);
+        if (entity.getRoles() != null && !entity.getRoles().isEmpty()) {
+            dto.setIdRol(entity.getRoles().get(0).getIdRole());
+            dto.setRolName(entity.getRoles().get(0).getName());
+        }
+        return dto;
+    }
+
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> findAll() throws Exception {
-        List<UsuarioDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, UsuarioDTO.class)).toList();
-
+        List<UsuarioDTO> list = service.findAll().stream().map(this::toDto).toList();
         return ResponseEntity.ok(list);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> findById(@PathVariable Integer id) throws Exception {
-        Usuario obj = service.findById(id);
-
-        return ResponseEntity.ok(modelMapper.map(obj,UsuarioDTO.class));
+        return ResponseEntity.ok(toDto(service.findById(id)));
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody UsuarioDTO dto) throws Exception {
-        Usuario obj = service.save(modelMapper.map(dto, Usuario.class));
-
-        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        //localhost:9090/categories/4
+        Usuario entity = modelMapper.map(dto, Usuario.class);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        if (dto.getIdRol() != null) {
+            Rol rol = rolRepo.findById(dto.getIdRol()).orElse(null);
+            if (rol != null) entity.setRoles(List.of(rol));
+        }
+        Usuario obj = service.save(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdUsuario()).toUri();
-
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioDTO> update(@PathVariable Integer id,@Valid @RequestBody UsuarioDTO dto) throws Exception {
-        Usuario obj = service.update(modelMapper.map(dto, Usuario.class), id);
-        return ResponseEntity.ok(modelMapper.map(obj, UsuarioDTO.class));
+        Usuario entity = modelMapper.map(dto, Usuario.class);
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+        if (dto.getIdRol() != null) {
+            Rol rol = rolRepo.findById(dto.getIdRol()).orElse(null);
+            if (rol != null) entity.setRoles(List.of(rol));
+        }
+        Usuario obj = service.update(entity, id);
+        return ResponseEntity.ok(toDto(obj));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
-
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/hateoas/{id}")
     public EntityModel<UsuarioDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
-        Usuario obj = service.findById(id);
-        UsuarioDTO dto = modelMapper.map(obj, UsuarioDTO.class);
+        UsuarioDTO dto = toDto(service.findById(id));
         EntityModel<UsuarioDTO> entityModel = EntityModel.of(dto);
         entityModel.add(WebMvcLinkBuilder.linkTo(
                 WebMvcLinkBuilder.methodOn(UsuarioController.class).findById(id)).withRel("usuario-self-info"));

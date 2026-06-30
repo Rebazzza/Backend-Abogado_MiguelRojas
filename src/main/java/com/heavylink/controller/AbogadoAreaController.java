@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.heavylink.dto.AbogadoAreaDTO;
 import com.heavylink.model.Abogado;
+import com.heavylink.model.Cita;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -56,8 +57,8 @@ public class AbogadoAreaController {
         return entityModel;
     }
 
-    @PreAuthorize("@authorizeLogic.hasAccess('findAll')")
-    @GetMapping
+
+    @GetMapping("/{id}")
     public ResponseEntity<AbogadoAreaDTO> findById(@PathVariable Integer id) throws Exception {
         AbogadoArea obj = service.findById(id);
 
@@ -86,6 +87,11 @@ public class AbogadoAreaController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/pageable")
+    public ResponseEntity<Page<AbogadoArea>> listPageable(Pageable pageable){
+        Page<AbogadoArea> page =service.listPage(pageable);
+        return ResponseEntity.ok(page);
     }
 
 

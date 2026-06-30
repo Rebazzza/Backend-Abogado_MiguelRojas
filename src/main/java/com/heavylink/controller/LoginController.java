@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
 import java.util.Map;
 
 @RestController
@@ -38,6 +39,18 @@ public class LoginController {
 
             final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
             final String accessToken = jwtTokenUtil.generateToken(userDetails);
+
+      /*ResponseCookie cookie = ResponseCookie.from("jwt", accessToken)
+        .httpOnly(true)
+        .secure(false)
+        .path("/")
+        .sameSite("Lax")
+        .maxAge(Duration.ofHours(5))
+        .build();
+
+      response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+
+      return ResponseEntity.ok(true);*/
             return ResponseEntity.ok(new JwtResponse(accessToken));
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

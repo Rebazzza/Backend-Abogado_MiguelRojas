@@ -7,8 +7,7 @@
     import org.springframework.transaction.annotation.Transactional;
 
     public interface IUsuario extends IGenericRepository<Usuario, Integer> {
-        //@Query("FROM User u WHERE u.username = ?);
-        //Queries derivados
+
         Usuario findOneByUsername(String username);
 
         @Transactional

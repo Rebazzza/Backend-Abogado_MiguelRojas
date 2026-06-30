@@ -7,10 +7,13 @@ import java.util.List;
 import com.heavylink.dto.AbogadoServicioDTO;
 
 
+import com.heavylink.model.Cita;
 import com.heavylink.service.IAbogadoServicioService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,4 +68,9 @@ public class AbogadoServicioController {
 
         return ResponseEntity.noContent().build();
     }
+    //@GetMapping("/pageable")
+    //public ResponseEntity<Page<AbogadoServicio>> listPageable(Pageable pageable){
+      //  Page<AbogadoServicio> page =service.listPage(pageable);
+       // return ResponseEntity.ok(page);
+    //}
 }
