@@ -3,9 +3,9 @@ package com.heavylink.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
-
-
+import com.heavylink.Repository.IAbogado;
 import com.heavylink.dto.UsuarioDTO;
 
 import com.heavylink.model.Abogado;
@@ -36,6 +36,7 @@ public class UsuarioController {
 
     private final IUsuarioService service;
     private final IRol rolRepo;
+    private final IAbogado abogadoRepo;
     private final PasswordEncoder passwordEncoder;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
@@ -45,6 +46,10 @@ public class UsuarioController {
         if (entity.getRoles() != null && !entity.getRoles().isEmpty()) {
             dto.setIdRol(entity.getRoles().get(0).getIdRole());
             dto.setRolName(entity.getRoles().get(0).getName());
+        }
+        if (entity.getAbogado() != null) {
+            dto.setIdAbogado(entity.getAbogado().getIdAbogado());
+            dto.setAbogadoNombre(entity.getAbogado().getNombre() + " " + entity.getAbogado().getApellido());
         }
         return dto;
     }
@@ -68,21 +73,79 @@ public class UsuarioController {
             Rol rol = rolRepo.findById(dto.getIdRol()).orElse(null);
             if (rol != null) entity.setRoles(List.of(rol));
         }
+        entity.setAbogado(null);
         Usuario obj = service.save(entity);
+
+        if (dto.getIdAbogado() != null) {
+            abogadoRepo.findById(dto.getIdAbogado()).ifPresent(a -> {
+                abogadoRepo.findByUsuarioIdUsuario(obj.getIdUsuario()).ifPresent(old -> {
+                    if (!old.getIdAbogado().equals(a.getIdAbogado())) {
+                        old.setUsuario(null);
+                        abogadoRepo.save(old);
+                    }
+                });
+                a.setUsuario(obj);
+                abogadoRepo.save(a);
+            });
+        }
+
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdUsuario()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> update(@PathVariable Integer id,@Valid @RequestBody UsuarioDTO dto) throws Exception {
-        Usuario entity = modelMapper.map(dto, Usuario.class);
+    public ResponseEntity<UsuarioDTO> update(@PathVariable Integer id, @Valid @RequestBody UsuarioDTO dto) throws Exception {
+
+        Usuario entity = service.findById(id);
+        if (entity == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+
+        Optional<Abogado> currentAbogado = abogadoRepo.findByUsuarioIdUsuario(id);
+
+        if (dto.getIdAbogado() != null) {
+            if (currentAbogado.isEmpty() || !currentAbogado.get().getIdAbogado().equals(dto.getIdAbogado())) {
+                currentAbogado.ifPresent(a -> {
+                    a.setUsuario(null);
+                    abogadoRepo.save(a);
+                });
+                abogadoRepo.findById(dto.getIdAbogado()).ifPresent(a -> {
+                    Usuario ref = new Usuario();
+                    ref.setIdUsuario(id);
+                    a.setUsuario(ref);
+                    abogadoRepo.save(a);
+                });
+            }
+        } else if (currentAbogado.isPresent()) {
+            currentAbogado.get().setUsuario(null);
+            abogadoRepo.save(currentAbogado.get());
+        }
+
+
+        entity.setUsername(dto.getUsername());
+
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
             entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
+
         if (dto.getIdRol() != null) {
             Rol rol = rolRepo.findById(dto.getIdRol()).orElse(null);
-            if (rol != null) entity.setRoles(List.of(rol));
+            if (rol != null) {
+                entity.setRoles(List.of(rol));
+            }
         }
+
+
+        if (dto.getIdAbogado() != null) {
+            Abogado ab = new Abogado();
+            ab.setIdAbogado(dto.getIdAbogado());
+            entity.setAbogado(ab);
+        } else {
+            entity.setAbogado(null);
+        }
+
+        
         Usuario obj = service.update(entity, id);
         return ResponseEntity.ok(toDto(obj));
     }

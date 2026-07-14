@@ -1,13 +1,6 @@
 package com.heavylink.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,7 +37,9 @@ public class Expediente {
     //private LocalDateTime fechaCierre
     private String fechaCierre;
 
-    @OneToOne
+    private String Victima;
+    private String Victimario;
+    @ManyToOne
     @JoinColumn(name = "id_caso", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_Expediente_Caso"))
     private Caso caso;
 }

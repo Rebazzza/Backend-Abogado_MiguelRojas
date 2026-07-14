@@ -1,9 +1,9 @@
 package com.heavylink.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.heavylink.model.Audiencia;
 
-public interface IAudiencia extends IGenericRepository<Audiencia, Integer> {
+import java.util.List;
 
+public interface IAudiencia extends IGenericRepository<Audiencia, Integer> {
+    List<Audiencia> findByAbogadoIdAbogado(Integer idAbogado);
 }

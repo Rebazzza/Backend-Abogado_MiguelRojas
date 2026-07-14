@@ -2,6 +2,7 @@ package com.heavylink.security;
 
 import com.heavylink.model.Usuario;
 import com.heavylink.Repository.IUsuario;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

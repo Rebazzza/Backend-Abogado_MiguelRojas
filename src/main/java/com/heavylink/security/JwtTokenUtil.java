@@ -1,5 +1,10 @@
 package com.heavylink.security;
 
+import com.heavylink.Repository.IAbogado;
+import com.heavylink.Repository.IUsuario;
+import com.heavylink.model.Abogado;
+
+import java.util.Optional;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -24,11 +29,25 @@ public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
 
+    private final IUsuario usuarioRepo;
+    private final IAbogado abogadoRepo;
+
+    public JwtTokenUtil(IUsuario usuarioRepo, IAbogado abogadoRepo) {
+        this.usuarioRepo = usuarioRepo;
+        this.abogadoRepo = abogadoRepo;
+    }
+
     public String generateToken(UserDetails userDetails) {
         //Payload
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","))); //ADMIN,DBA
         claims.put("test", "value-test");
+
+        com.heavylink.model.Usuario usuario = usuarioRepo.findOneByUsername(userDetails.getUsername());
+        if (usuario != null) {
+            Optional<Abogado> optAbogado = abogadoRepo.findByUsuarioIdUsuario(usuario.getIdUsuario());
+            optAbogado.ifPresent(a -> claims.put("idAbogado", a.getIdAbogado()));
+        }
 
         //Generar el token
         return Jwts.builder()

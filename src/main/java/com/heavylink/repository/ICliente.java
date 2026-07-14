@@ -1,9 +1,9 @@
 package com.heavylink.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.heavylink.model.Cliente;
 
-public interface ICliente extends IGenericRepository<Cliente, Integer> {
+import java.util.List;
 
+public interface ICliente extends IGenericRepository<Cliente, Integer> {
+    List<Cliente> findByAbogadoIdAbogado(Integer idAbogado);
 }

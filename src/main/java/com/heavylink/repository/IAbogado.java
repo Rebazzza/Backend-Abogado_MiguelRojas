@@ -1,9 +1,9 @@
 package com.heavylink.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.heavylink.model.Abogado;
 
-public interface IAbogado extends IGenericRepository<Abogado,Integer>{
+import java.util.Optional;
 
+public interface IAbogado extends IGenericRepository<Abogado,Integer>{
+    Optional<Abogado> findByUsuarioIdUsuario(Integer idUsuario);
 }

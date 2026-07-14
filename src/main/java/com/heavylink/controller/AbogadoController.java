@@ -3,8 +3,9 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
+import com.heavylink.Repository.IAbogado;
+import com.heavylink.Repository.IUsuario;
 import com.heavylink.dto.AbogadoDTO;
-import com.heavylink.model.Usuario;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class AbogadoController {
 
     private final IAbogadoService service;
+    private final IAbogado abogadoRepo;
+    private final IUsuario usuarioRepo;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
@@ -45,7 +48,17 @@ public class AbogadoController {
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody AbogadoDTO dto) throws Exception {
-        Abogado obj = service.save(modelMapper.map(dto, Abogado.class));
+        Abogado entity = modelMapper.map(dto, Abogado.class);
+        usuarioRepo.findById(dto.getIdUsuario()).ifPresent(u -> {
+            abogadoRepo.findByUsuarioIdUsuario(u.getIdUsuario()).ifPresent(old -> {
+                if (!old.getIdAbogado().equals(entity.getIdAbogado())) {
+                    old.setUsuario(null);
+                    abogadoRepo.save(old);
+                }
+            });
+            entity.setUsuario(u);
+        });
+        Abogado obj = service.save(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdAbogado()).toUri();
 
         return ResponseEntity.created(location).build();
@@ -53,7 +66,18 @@ public class AbogadoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AbogadoDTO> update(@PathVariable Integer id,@Valid @RequestBody AbogadoDTO dto) throws Exception {
-        Abogado obj = service.update(modelMapper.map(dto, Abogado.class), id);
+        dto.setIdAbogado(id);
+        Abogado entity = modelMapper.map(dto, Abogado.class);
+        usuarioRepo.findById(dto.getIdUsuario()).ifPresent(u -> {
+            abogadoRepo.findByUsuarioIdUsuario(u.getIdUsuario()).ifPresent(old -> {
+                if (!old.getIdAbogado().equals(id)) {
+                    old.setUsuario(null);
+                    abogadoRepo.save(old);
+                }
+            });
+            entity.setUsuario(u);
+        });
+        Abogado obj = service.update(entity, id);
         return ResponseEntity.ok(modelMapper.map(obj, AbogadoDTO.class));
     }
     @DeleteMapping("/{id}")

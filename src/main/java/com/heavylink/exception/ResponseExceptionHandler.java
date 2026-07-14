@@ -1,6 +1,7 @@
 package com.heavylink.exception;
 
 import org.jspecify.annotations.Nullable;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +36,20 @@ import java.util.stream.Collectors;
             );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }   
+
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public ResponseEntity<CustomErrorTemplate> handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request) {
+            String msg = ex.getMostSpecificCause().getMessage();
+            if (msg == null || msg.isBlank()) {
+                msg = ex.getMessage();
+            }
+            CustomErrorTemplate error = new CustomErrorTemplate(
+                    LocalDateTime.now(),
+                    "Error de integridad: " + msg,
+                    request.getDescription(false)
+            );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        }
 
         @ExceptionHandler(ArithmeticException.class)
         public ResponseEntity<CustomErrorTemplate> handleArithmeticException(ArithmeticException ex, WebRequest request) {

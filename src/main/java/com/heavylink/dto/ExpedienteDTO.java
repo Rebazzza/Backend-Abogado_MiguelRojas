@@ -23,4 +23,6 @@ public class ExpedienteDTO {
     private String fechaInicio;
     private String fechaCierre;
     private Integer idCaso;
+    private String victima;
+    private String victimario;
 }

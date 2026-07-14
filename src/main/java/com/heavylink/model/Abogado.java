@@ -1,5 +1,6 @@
 package com.heavylink.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -17,7 +18,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-//@Table(name="categories", schema = "rrhh")
 public class Abogado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +40,6 @@ public class Abogado {
 
     @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false, unique = true, foreignKey = @ForeignKey(name = "FK_ABOGADO_USUARIO"))
+    @JsonIgnoreProperties({"abogado", "hibernateLazyInitializer", "handler"})
     private Usuario usuario;
 }

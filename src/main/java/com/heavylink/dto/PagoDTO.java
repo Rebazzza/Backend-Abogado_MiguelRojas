@@ -22,4 +22,5 @@ public class PagoDTO {
     private float monto;
     private LocalDateTime fechaPago;
     private Integer idCaso;
+    private Integer idCliente;
 }

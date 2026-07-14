@@ -18,5 +18,6 @@ public class AbogadoDTO {
     private String correo;
     private String especialidad;
     private boolean estado;
+    @NotNull
     private Integer idUsuario;
 }

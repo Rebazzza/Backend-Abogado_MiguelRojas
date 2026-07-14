@@ -29,7 +29,7 @@ public class DocumentosLegales {
     private Integer idDocumento;
 	@Column(nullable = false, length = 70)//name="nombre")
     private String nombreArchivo;
-	@Column(nullable = false, length = 70)//name="nombre")
+	@Column(nullable = false, length = 255)//name="nombre")
     private String ruta;
 	@Column(nullable = false)
     private LocalDateTime fechaCreacion;

@@ -38,4 +38,8 @@ public class Pago {
     @ManyToOne
     @JoinColumn(name = "id_caso", nullable = false, foreignKey = @ForeignKey(name = "FK_Pago_caso"))
     private Caso caso;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = true, foreignKey = @ForeignKey(name = "FK_PAGO_CLIENTE"))
+    private Cliente cliente;
 }

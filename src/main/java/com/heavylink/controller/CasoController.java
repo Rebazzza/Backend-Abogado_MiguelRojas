@@ -4,8 +4,7 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
-
-
+import com.heavylink.Repository.ICasos;
 import com.heavylink.dto.CasoDTO;
 
 import com.heavylink.model.Abogado;
@@ -32,12 +31,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CasoController {
 
     private final ICasosService service;
+    private final ICasos casoRepo;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<CasoDTO>> findAll() throws Exception {
         List<CasoDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, CasoDTO.class)).toList();
+        return ResponseEntity.ok(list);
+    }
 
+    @GetMapping(params = "abogadoId")
+    public ResponseEntity<List<CasoDTO>> findAllByAbogado(@RequestParam Integer abogadoId) throws Exception {
+        List<CasoDTO> list = casoRepo.findByAbogadoIdAbogado(abogadoId).stream().map(e -> modelMapper.map(e, CasoDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
     @GetMapping("/{id}")

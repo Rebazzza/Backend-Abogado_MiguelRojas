@@ -3,10 +3,9 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
-
+import com.heavylink.Repository.ICliente;
 import com.heavylink.dto.PagoDTO;
 
-import com.heavylink.model.Abogado;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,44 +29,49 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class PagoController {
 
     private final IPagoService service;
+    private final ICliente clienteRepo;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
+
     @GetMapping
     public ResponseEntity<List<PagoDTO>> findAll() throws Exception {
         List<PagoDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, PagoDTO.class)).toList();
-
         return ResponseEntity.ok(list);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PagoDTO> findById(@PathVariable Integer id) throws Exception {
         Pago obj = service.findById(id);
-
-        return ResponseEntity.ok(modelMapper.map(obj,PagoDTO.class));
+        return ResponseEntity.ok(modelMapper.map(obj, PagoDTO.class));
     }
 
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody PagoDTO dto) throws Exception {
-        Pago obj = service.save(modelMapper.map(dto, Pago.class));
-
-        //return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        //localhost:9090/categories/4
+        Pago entity = modelMapper.map(dto, Pago.class);
+        if (dto.getIdCliente() != null) {
+            clienteRepo.findById(dto.getIdCliente()).ifPresent(entity::setCliente);
+        }
+        Pago obj = service.save(entity);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdPago()).toUri();
-
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PagoDTO> update(@PathVariable Integer id, @Valid @RequestBody PagoDTO dto) throws Exception {
-        Pago obj = service.update(modelMapper.map(dto, Pago.class), id);
+        Pago entity = modelMapper.map(dto, Pago.class);
+        if (dto.getIdCliente() != null) {
+            clienteRepo.findById(dto.getIdCliente()).ifPresent(entity::setCliente);
+        }
+        Pago obj = service.update(entity, id);
         return ResponseEntity.ok(modelMapper.map(obj, PagoDTO.class));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) throws Exception {
         service.delete(id);
-
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/hateoas/{id}")
     public EntityModel<PagoDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
         Pago obj = service.findById(id);
@@ -84,7 +88,7 @@ public class PagoController {
 
     @GetMapping("/pageable")
     public ResponseEntity<Page<Pago>> listPageable(Pageable pageable){
-        Page<Pago> page =service.listPage(pageable);
+        Page<Pago> page = service.listPage(pageable);
         return ResponseEntity.ok(page);
     }
 }

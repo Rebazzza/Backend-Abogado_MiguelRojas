@@ -1,6 +1,7 @@
 package com.heavylink.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,12 @@ public class Usuario {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role",
-            joinColumns = @JoinColumn(name="id_user", referencedColumnName="idUsuario"), // Ojo: tu ID aquí se llama idUsuario, no idUser
+            joinColumns = @JoinColumn(name="id_user", referencedColumnName="idUsuario"),
             inverseJoinColumns = @JoinColumn(name="id_role", referencedColumnName="idRole")
     )
     private List<Rol> roles;
+
+    @OneToOne(mappedBy = "usuario")
+    @JsonIgnoreProperties("usuario")
+    private Abogado abogado;
 }

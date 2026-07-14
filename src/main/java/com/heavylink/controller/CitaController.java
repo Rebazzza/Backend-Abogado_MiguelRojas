@@ -4,8 +4,7 @@ package com.heavylink.controller;
 import java.net.URI;
 import java.util.List;
 
-
-
+import com.heavylink.Repository.ICitas;
 import com.heavylink.dto.CitaDTO;
 import com.heavylink.model.Abogado;
 import jakarta.validation.Valid;
@@ -31,12 +30,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class CitaController {
 
     private final ICitasService service;
+    private final ICitas citaRepo;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     @GetMapping
     public ResponseEntity<List<CitaDTO>> findAll() throws Exception {
         List<CitaDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, CitaDTO.class)).toList();
+        return ResponseEntity.ok(list);
+    }
 
+    @GetMapping(params = "abogadoId")
+    public ResponseEntity<List<CitaDTO>> findAllByAbogado(@RequestParam Integer abogadoId) throws Exception {
+        List<CitaDTO> list = citaRepo.findByAbogadoIdAbogado(abogadoId).stream().map(e -> modelMapper.map(e, CitaDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
     @GetMapping("/{id}")

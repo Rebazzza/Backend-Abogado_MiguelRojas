@@ -1,10 +1,7 @@
 package com.heavylink.dto;
 
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -16,5 +13,6 @@ public class UsuarioDTO {
     private Integer idRol;
     private String rolName;
     private String password;
-
+    private Integer idAbogado;
+    private String abogadoNombre;
 }
